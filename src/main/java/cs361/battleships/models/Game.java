@@ -1,6 +1,7 @@
 package cs361.battleships.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import java.util.Random;
 
 import static cs361.battleships.models.AttackStatus.*;
 
@@ -47,17 +48,23 @@ public class Game {
     }
 
     private char randCol() {
-        // TODO implement
+        Random randNum = new Random();
+        int colNum = randNum.nextInt(10) + 1;
+        colNum = colNum + 'A' - 1;
         return 'X';
     }
 
     private int randRow() {
-        // TODO implement
+        Random randNum = new Random();
+        int rowNum = randNum.nextInt(10) + 1;
         return 0;
     }
 
     private boolean randVertical() {
-        // TODO implement
+        if (/*random num is vertical*/)
+        {
+            return true;
+        }
         return false;
     }
 }
