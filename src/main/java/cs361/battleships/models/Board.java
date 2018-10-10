@@ -25,7 +25,7 @@ public class Board {
 
 		//TODO make sure ships don't get placed on top of each other
 
-		System.out.println("Attempting to place ship at: " + x + y);
+		System.out.println("Attempting to place ship at: " + x + y + isVertical);
 
 		if (this.ships.size() > 3)
 			return false;
@@ -43,6 +43,7 @@ public class Board {
 			// Ship is horizontal so we make sure it has space to the right and is within bounds vertically
 			if ( ((y - 'A') >= 0 && (y - 'A') < 10) && (x >= 0 && x < (10 - ship.getLength() + 1))) {
 				// We are within bounds, so everything is OK to place the ship
+				System.out.println("Successful");
 				ship.setLocation(x, y, isVertical);
 				ships.add(ship);
 				return true;

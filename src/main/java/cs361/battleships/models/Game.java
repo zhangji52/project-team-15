@@ -14,14 +14,20 @@ public class Game {
 	DO NOT change the signature of this method. It is used by the grading scripts.
 	 */
     public boolean placeShip(Ship ship, int x, char y, boolean isVertical) {
+
+        System.out.println(" PLAYER IS GOING ");
         boolean successful = playersBoard.placeShip(ship, x, y, isVertical);
-        if (!successful)
+        if (!successful) {
+
+            System.out.println(" PLAYER UNSUCCESSFUL PLACED SHIP ");
             return false;
+        }
 
         boolean opponentPlacedSuccessfully;
         do {
             // AI places random ships, so it might try and place overlapping ships
             // let it try until it gets it right
+            System.out.println(" OPPONENT IS GOING ");
             opponentPlacedSuccessfully = opponentsBoard.placeShip(ship, randRow(), randCol(), randVertical());
         } while (!opponentPlacedSuccessfully);
 
@@ -38,26 +44,25 @@ public class Game {
         }
 
         Result opponentAttackResult;
-        //do {
+        do {
             // AI does random attacks, so it might attack the same spot twice
             // let it try until it gets it right
             opponentAttackResult = playersBoard.attack(randRow(), randCol());
-        //} while(opponentAttackResult.getResult() != INVALID);
+        } while(opponentAttackResult.getResult() != INVALID);
 
         return true;
     }
 
     private char randCol() {
         Random randNum = new Random();
-        int colNum = randNum.nextInt(10) + 1;
-        colNum = colNum + 'A' - 1;
-        return 'X';
+        char colChar = (char) ('A' + randNum.nextInt(10));
+        return colChar;
     }
 
     private int randRow() {
         Random randNum = new Random();
-        int rowNum = randNum.nextInt(10) + 1;
-        return 0;
+        int rowNum = randNum.nextInt(10);
+        return rowNum;
     }
 
     private boolean randVertical() {
