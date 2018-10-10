@@ -1,15 +1,19 @@
 package cs361.battleships.models;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class Board {
 
+	@JsonProperty public List<Ship> ships;
+
 	/*
 	DO NOT change the signature of this method. It is used by the grading scripts.
 	 */
 	public Board() {
-		// TODO Implement
+		ships = new ArrayList<>();
 	}
 
 	/*
@@ -21,21 +25,27 @@ public class Board {
 
 		//TODO make sure ships don't get placed on top of each other
 
+		if (this.ships.size() > 3)
+			return false;
+
 		if (isVertical) {
 			// Ship is vertical so we make sure it has space above it and is within bounds horizontally
-			if ( (x > 0 && x <= 10) && ((y - 'A') >= 0 && (y - 'A') < (10 - ship.getLength() + 1))) {
+			if ( (x >= 0 && x < 10) && ((y - 'A') >= 0 && (y - 'A') < (10 - ship.getLength() + 1))) {
 				// We are within bounds, so everything is OK to place the ship
 				ship.setLocation(x, y, isVertical);
+				ships.add(ship);
 				return true;
 			}
 		} else {
 			// Ship is horizontal so we make sure it has space to the right and is within bounds vertically
-			if ( ((y - 'A') >= 0 && (y - 'A') < 10) && (x > 0 && x <= (10 - ship.getLength() + 1))) {
+			if ( ((y - 'A') >= 0 && (y - 'A') < 10) && (x >= 0 && x < (10 - ship.getLength() + 1))) {
 				// We are within bounds, so everything is OK to place the ship
 				ship.setLocation(x, y, isVertical);
+				ships.add(ship);
 				return true;
 			}
 		}
+
 		return false;
 	}
 
@@ -48,8 +58,7 @@ public class Board {
 	}
 
 	public List<Ship> getShips() {
-		//TODO implement
-		return null;
+		return ships;
 	}
 
 	public void setShips(List<Ship> ships) {
