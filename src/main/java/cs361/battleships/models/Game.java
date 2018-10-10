@@ -33,29 +33,6 @@ public class Game {
 
         return true;
     }
-    public boolean placeShip(Ship ship, int x, char y, boolean isVertical) {
-//
-//
-//
-//            boolean opponentPlacedSuccessfully = false;
-//            do {
-//                // AI places random ships, so it might try and place overlapping ships
-//                // let it try until it gets it right
-//                System.out.println(" OPPONENT IS GOING ");
-//                opponentPlacedSuccessfully = opponentsBoard.placeShip(ship, randRow(), randCol(), randVertical());
-//            } while (!opponentPlacedSuccessfully);
-//
-//        System.out.println(" PLAYER IS GOING ");
-//
-//        boolean successful = playersBoard.placeShip(ship, x, y, isVertical);
-//        if (!successful) {
-//
-//            System.out.println(" PLAYER UNSUCCESSFUL PLACED SHIP ");
-//            return false;
-//        }
-//
-//        return true;
-//    }
 
     /*
 	DO NOT change the signature of this method. It is used by the grading scripts.
