@@ -1,3 +1,22 @@
+
+Skip to content
+
+    All gists
+    GitHub
+
+    New gist
+    @Hartwelg
+
+0
+
+    0
+
+@caiusb caiusb/game.js
+Created 2 days ago •
+Code
+Revisions 1
+Front-end fix.
+game.js
 var isSetup = true;
 var placedShips = 0;
 var game;
@@ -63,11 +82,13 @@ function registerCellListener(f) {
 }
 
 function cellClick() {
-    let row = this.parentNode.rowIndex;
-    let col = this.cellIndex;
+    let row = this.parentNode.rowIndex + 1;
+    let col = String.fromCharCode(this.cellIndex + 65);
+    console.log(col);
     if (isSetup) {
         sendXhr("POST", "/place", {game: game, shipType: shipType, x: row, y: col, isVertical: vertical}, function(data) {
             game = data;
+
             redrawGrid();
             placedShips++;
             if (placedShips == 3) {
@@ -143,3 +164,25 @@ function initGame() {
         game = data;
     });
 };
+@Hartwelg
+
+Attach files by dragging & dropping,
+
+, or pasting from the clipboard.
+Styling with Markdown is supported
+
+    © 2018 GitHub, Inc.
+    Terms
+    Privacy
+    Security
+    Status
+    Help
+
+    Contact GitHub
+    Pricing
+    API
+    Training
+    Blog
+    About
+
+Press h to open a hovercard with more details.
