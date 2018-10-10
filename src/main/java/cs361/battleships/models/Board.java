@@ -16,6 +16,9 @@ public class Board {
 	DO NOT change the signature of this method. It is used by the grading scripts.
 	 */
 	public boolean placeShip(Ship ship, int x, char y, boolean isVertical) {
+		// I'm assuming non-zero indexing for the numbers, and valid characters to be 'A' through 'J'
+		// So the board starts at 1-A and ends at 10-J
+
 		if (isVertical) {
 			// Ship is vertical so we make sure it has space above it and is within bounds horizontally
 			if ( (x > 0 && x <= 10) && ((y - 'A') >= 0 && (y - 'A') < (10 - ship.getLength() + 1))) {
