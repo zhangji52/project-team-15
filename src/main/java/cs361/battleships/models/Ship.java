@@ -7,7 +7,7 @@ import java.util.List;
 public class Ship {
 
 	@JsonProperty private List<Square> occupiedSquares;
-	private String shipType;
+	@JsonProperty private String shipType;
 
 	public Ship() {
 		occupiedSquares = new ArrayList<>();
@@ -15,7 +15,7 @@ public class Ship {
 	
 	public Ship(String kind) {
 		//TODO implement
-		this.shipType = kind;
+		//this.shipType = kind;
 		/*switch(kind) {
 			case "MINESWEEPER":
 				//stuff
