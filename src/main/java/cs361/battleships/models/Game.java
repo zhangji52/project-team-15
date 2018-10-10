@@ -57,7 +57,7 @@ public class Game {
     private int randRow() {
         Random randNum = new Random();
         int rowNum = randNum.nextInt(10) + 1;
-        return 0;
+        return randNum;
     }
 
     private boolean randVertical() {
