@@ -1,22 +1,3 @@
-
-Skip to content
-
-    All gists
-    GitHub
-
-    New gist
-    @Hartwelg
-
-0
-
-    0
-
-@caiusb caiusb/game.js
-Created 2 days ago •
-Code
-Revisions 1
-Front-end fix.
-game.js
 var isSetup = true;
 var placedShips = 0;
 var game;
@@ -164,25 +145,3 @@ function initGame() {
         game = data;
     });
 };
-@Hartwelg
-
-Attach files by dragging & dropping,
-
-, or pasting from the clipboard.
-Styling with Markdown is supported
-
-    © 2018 GitHub, Inc.
-    Terms
-    Privacy
-    Security
-    Status
-    Help
-
-    Contact GitHub
-    Pricing
-    API
-    Training
-    Blog
-    About
-
-Press h to open a hovercard with more details.
