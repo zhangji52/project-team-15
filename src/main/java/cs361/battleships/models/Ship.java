@@ -1,8 +1,11 @@
 package cs361.battleships.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.hibernate.hql.internal.ast.SqlASTFactory;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Iterator;
 
 public class Ship {
 
@@ -31,9 +34,30 @@ public class Ship {
 
 		}
 
-//		for(int i = 0; i < this.shipLength; i++) {
-//			this.occupiedSquares.add(new Square());
-//		}
+		this.occupiedSquares = new ArrayList<>();
+
+		for(int i = 0; i < this.shipLength; i++) {
+			this.occupiedSquares.add(new Square());
+		}
+	}
+
+	public void setLocation(int x, char y, boolean isVertical) {
+
+		Iterator<Square> iterator = this.occupiedSquares.iterator();
+		while (iterator.hasNext()) {
+			// This is INTENDED to take each of the squares stored in this ship, and set their location on the board
+			// This way ships themselves can keep track of where they are
+
+			Square curSquare = iterator.next();
+			curSquare.setRow(x);
+			curSquare.setColumn(y);
+
+			if (isVertical) {
+				y++;
+			} else {
+				x++;
+			}
+		}
 	}
 
 	public List<Square> getOccupiedSquares() {

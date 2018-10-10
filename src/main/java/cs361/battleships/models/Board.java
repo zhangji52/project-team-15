@@ -25,14 +25,14 @@ public class Board {
 			// Ship is vertical so we make sure it has space above it and is within bounds horizontally
 			if ( (x > 0 && x <= 10) && ((y - 'A') >= 0 && (y - 'A') < (10 - ship.getLength() + 1))) {
 				// We are within bounds, so everything is OK to place the ship
-				// TODO place the ship
+				ship.setLocation(x, y, isVertical);
 				return true;
 			}
 		} else {
 			// Ship is horizontal so we make sure it has space to the right and is within bounds vertically
 			if ( ((y - 'A') >= 0 && (y - 'A') < 10) && (x > 0 && x <= (10 - ship.getLength() + 1))) {
 				// We are within bounds, so everything is OK to place the ship
-				// TODO place the ship
+				ship.setLocation(x, y, isVertical);
 				return true;
 			}
 		}
