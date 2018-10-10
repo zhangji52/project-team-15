@@ -61,10 +61,16 @@ public class Game {
     }
 
     private boolean randVertical() {
-        if (/*is vertical*/)
+        Random randNum = new Random();
+        int decision = randNum.nextInt(1);
+        if (decision == 1)
         {
             return true;
         }
-        return false;
+        else
+        {
+            return false;
+        }
+
     }
 }
