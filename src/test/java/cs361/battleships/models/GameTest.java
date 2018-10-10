@@ -8,10 +8,12 @@ public class GameTest {
     public void testRandVertical{
 
     }
+    @Test
     public void testRandRow{
 
     }
+    @Test
     public void testRandCol{
-        
+
     }
 }
