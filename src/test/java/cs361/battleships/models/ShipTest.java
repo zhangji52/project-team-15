@@ -25,7 +25,7 @@ public class ShipTest {
             Square temp = it.next();
             assert(temp.getRow() == x);
             assert(temp.getColumn() == y);
-            x++;
+            y++;
         }
     }
 }

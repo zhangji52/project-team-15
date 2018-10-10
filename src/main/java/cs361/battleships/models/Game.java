@@ -78,4 +78,12 @@ public class Game {
         }
 
     }
+
+    public Board getPlayersBoard() {
+        return playersBoard;
+    }
+
+    public Board getOpponentsBoard() {
+        return opponentsBoard;
+    }
 }

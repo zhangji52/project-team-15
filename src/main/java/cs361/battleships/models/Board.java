@@ -66,7 +66,7 @@ public class Board {
 	}
 
 	public void setShips(List<Ship> ships) {
-		//TODO implement
+		this.ships = ships;
 	}
 
 	public List<Result> getAttacks() {

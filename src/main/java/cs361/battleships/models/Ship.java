@@ -53,9 +53,9 @@ public class Ship {
 			curSquare.setColumn(y);
 
 			if (isVertical) {
-				y++;
-			} else {
 				x++;
+			} else {
+				y++;
 			}
 		}
 	}

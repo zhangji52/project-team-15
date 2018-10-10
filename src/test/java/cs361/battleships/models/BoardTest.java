@@ -33,9 +33,9 @@ public class BoardTest {
     public void testShipLocations() {
         Board board = new Board();
 
-        assert(board.placeShip(new Ship("MINESWEEPER"), 3, 'D', false));
-        assert(board.placeShip(new Ship("DESTROYER"), 4, 'D', false));
-        assert(board.placeShip(new Ship("BATTLESHIP"), 5, 'D', false));
+        assert(board.placeShip(new Ship("MINESWEEPER"), 3, 'D', true));
+        assert(board.placeShip(new Ship("DESTROYER"), 4, 'D', true));
+        assert(board.placeShip(new Ship("BATTLESHIP"), 5, 'D', true));
 
         List<Ship> ships = board.getShips();
         Iterator<Ship> it = ships.iterator();
