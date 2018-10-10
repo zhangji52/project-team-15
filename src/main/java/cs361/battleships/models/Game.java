@@ -61,7 +61,7 @@ public class Game {
     }
 
     private boolean randVertical() {
-        if (/*random num is vertical*/)
+        if (/*is vertical*/)
         {
             return true;
         }
