@@ -5,7 +5,7 @@
 
     <artifactId>battleships</artifactId>
     <!-- If you want to deploy to a war please -->
-    <!-- replace "jar" with "war" and -->
+    <!-- replace "jar" wh "war" and -->
     <!-- comment ninja-standalone dependency and  -->
     <!-- uncomment the dependency for ninja-servlet -->
     <packaging>jar</packaging>
