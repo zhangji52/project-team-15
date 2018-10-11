@@ -27,7 +27,7 @@ public class Ship {
 		}
 
 		this.shipLength = otherShip.shipLength;
-		System.out.println("\t\tCreating ship of length: " + this.shipLength + " from another ship");
+		//System.out.println("\t\tCreating ship of length: " + this.shipLength + " from another ship");
 	}
 	
 	public Ship(String kind) {
@@ -48,7 +48,7 @@ public class Ship {
 
 		}
 
-		System.out.println("\t\tCreating ship of length: " + this.shipLength);
+		//System.out.println("\t\tCreating ship of length: " + this.shipLength);
 
 		this.occupiedSquares = new ArrayList<>();
 
@@ -59,7 +59,7 @@ public class Ship {
 
 	public void setLocation(int x, char y, boolean isVertical) {
 
-		System.out.println("\t\t Ship location set to: " + x + y + isVertical);
+		//System.out.println("\t\t Ship location set to: " + x + y + isVertical);
 
 		Iterator<Square> iterator = this.occupiedSquares.iterator();
 		while (iterator.hasNext()) {
