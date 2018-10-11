@@ -15,7 +15,7 @@ public class Game {
 	 */
     public boolean placeShip(Ship ship, int x, char y, boolean isVertical) {
 
-        //System.out.println(" PLAYER IS GOING ");
+        System.out.println(" PLAYER IS GOING ");
         boolean successful = playersBoard.placeShip(new Ship(ship), x, y, isVertical);
         if (!successful) {
 
@@ -27,7 +27,7 @@ public class Game {
         do {
             // AI places random ships, so it might try and place overlapping ships
             // let it try until it gets it right
-            //System.out.println(" OPPONENT IS GOING ");
+            System.out.println(" OPPONENT IS GOING ");
             opponentPlacedSuccessfully = opponentsBoard.placeShip(new Ship(ship), randRow(), randCol(), randVertical());
         } while (!opponentPlacedSuccessfully);
 
