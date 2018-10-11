@@ -1,5 +1,6 @@
 package cs361.battleships.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.hql.internal.ast.SqlASTFactory;
 
@@ -10,7 +11,7 @@ import java.util.Iterator;
 public class Ship {
 
 	@JsonProperty private List<Square> occupiedSquares;
-	@JsonProperty private int shipLength;
+	@JsonIgnore private int shipLength;
 
 	public Ship() {
 		occupiedSquares = new ArrayList<>();
