@@ -9,9 +9,9 @@ import java.util.List;
 import java.util.Iterator;
 
 public class Ship {
-
 	@JsonProperty private List<Square> occupiedSquares;
 	@JsonIgnore private int shipLength;
+	@JsonIgnore String classOfShip;
 
 	public Ship() {
 		occupiedSquares = new ArrayList<>();
@@ -27,24 +27,24 @@ public class Ship {
 			this.occupiedSquares.add(new Square(curSquare.getRow(), curSquare.getColumn()));
 		}
 
-		this.shipLength = otherShip.shipLength;
+		shipLength = otherShip.shipLength;
 		//System.out.println("\t\tCreating ship of length: " + this.shipLength + " from another ship");
 	}
 	
 	public Ship(String kind) {
-
+		classOfShip = kind;
 		// This switch statement will determine how long our ship is, based on the type string given
 		switch(kind) {
 			case "MINESWEEPER":
-				this.shipLength = 2;
+				shipLength = 2;
 				break;
 
 			case "DESTROYER":
-				this.shipLength = 3;
+				shipLength = 3;
 				break;
 
 			case "BATTLESHIP":
-				this.shipLength = 4;
+				shipLength = 4;
 				break;
 
 		}
@@ -56,6 +56,37 @@ public class Ship {
 		for(int i = 0; i < this.shipLength; i++) {
 			this.occupiedSquares.add(new Square());
 		}
+	}
+
+	//Helper function for testing the boards placement function
+	//allows us to check if 1 of all 3 class of ships has been placed
+	public void setKind(String kind) {
+		classOfShip = kind;
+		switch(kind) {
+			case "MINESWEEPER":
+				shipLength = 2;
+				break;
+
+			case "DESTROYER":
+				shipLength = 3;
+				break;
+
+			case "BATTLESHIP":
+				shipLength = 4;
+				break;
+
+		}
+		
+		this.occupiedSquares = new ArrayList<>();
+
+		for(int i = 0; i < this.shipLength; i++) {
+			this.occupiedSquares.add(new Square());
+		}
+	}
+
+	//returns the type of ship this is as a string
+	public @JsonIgnore String getKind(){
+		return classOfShip;
 	}
 
 	public void setLocation(int x, char y, boolean isVertical) {
@@ -83,7 +114,7 @@ public class Ship {
 		return this.occupiedSquares;
 	}
 
-	public int getLength() {
+	public @JsonIgnore int getLength() {
 		return shipLength;
 	}
 }
