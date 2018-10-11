@@ -49,15 +49,14 @@ public class Game {
 
     private char randCol() {
         Random randNum = new Random();
-        int colNum = randNum.nextInt(10) + 1;
-        colNum = colNum + 'A' - 1;
-        return 'X';
+        char colChar = (char) ('A' + randNum.nextInt(10));
+        return colChar;
     }
 
     private int randRow() {
         Random randNum = new Random();
-        int rowNum = randNum.nextInt(10) + 1;
-        return randNum;
+        int rowNum = randNum.nextInt(10);
+        return rowNum;
     }
 
     private boolean randVertical() {
@@ -72,5 +71,13 @@ public class Game {
             return false;
         }
 
+    }
+
+    public Board getPlayersBoard() {
+        return playersBoard;
+    }
+
+    public Board getOpponentsBoard() {
+        return opponentsBoard;
     }
 }
