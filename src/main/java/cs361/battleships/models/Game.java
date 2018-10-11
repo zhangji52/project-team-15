@@ -1,6 +1,7 @@
 package cs361.battleships.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import java.util.Random;
 
 import static cs361.battleships.models.AttackStatus.*;
 
@@ -13,15 +14,21 @@ public class Game {
 	DO NOT change the signature of this method. It is used by the grading scripts.
 	 */
     public boolean placeShip(Ship ship, int x, char y, boolean isVertical) {
-        boolean successful = playersBoard.placeShip(ship, x, y, isVertical);
-        if (!successful)
+
+        System.out.println(" PLAYER IS GOING ");
+        boolean successful = playersBoard.placeShip(new Ship(ship), x, y, isVertical);
+        if (!successful) {
+
+            //System.out.println(" PLAYER UNSUCCESSFUL PLACED SHIP ");
             return false;
+        }
 
         boolean opponentPlacedSuccessfully;
         do {
             // AI places random ships, so it might try and place overlapping ships
             // let it try until it gets it right
-            opponentPlacedSuccessfully = opponentsBoard.placeShip(ship, randRow(), randCol(), randVertical());
+            System.out.println(" OPPONENT IS GOING ");
+            opponentPlacedSuccessfully = opponentsBoard.placeShip(new Ship(ship), randRow(), randCol(), randVertical());
         } while (!opponentPlacedSuccessfully);
 
         return true;
@@ -47,17 +54,36 @@ public class Game {
     }
 
     private char randCol() {
-        // TODO implement
-        return 'X';
+        Random randNum = new Random();
+        char colChar = (char) ('A' + randNum.nextInt(10));
+        return colChar;
     }
 
     private int randRow() {
-        // TODO implement
-        return 0;
+        Random randNum = new Random();
+        int rowNum = randNum.nextInt(10);
+        return rowNum;
     }
 
     private boolean randVertical() {
-        // TODO implement
-        return false;
+        Random randNum = new Random();
+        int decision = randNum.nextInt(1);
+        if (decision == 1)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+
+    }
+
+    public Board getPlayersBoard() {
+        return playersBoard;
+    }
+
+    public Board getOpponentsBoard() {
+        return opponentsBoard;
     }
 }
