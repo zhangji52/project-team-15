@@ -13,9 +13,9 @@ public class GameTest {
     public void testGameStart() {
         Game game = new Game();
 
-        assert(game.placeShip(new Ship("MINESWEEPER"), 3, 'D', true));
-        assert(game.placeShip(new Ship("DESTROYER"), 4, 'D', true));
-        assert(game.placeShip(new Ship("BATTLESHIP"), 5, 'D', true));
+        assert(game.placeShip(new Ship("MINESWEEPER"), 3, 'D', false));
+        assert(game.placeShip(new Ship("DESTROYER"), 4, 'D', false));
+        assert(game.placeShip(new Ship("BATTLESHIP"), 5, 'D', false));
 
         List<Ship> ships = game.getPlayersBoard().getShips();
         Iterator<Ship> it = ships.iterator();
@@ -26,13 +26,14 @@ public class GameTest {
 
             List<Square> sweepSquares = tempShip.getOccupiedSquares();
             Iterator<Square> jt = sweepSquares.iterator();
-            int x = j;
+            char x = 'D';
             while (jt.hasNext()) {
                 Square temp = jt.next();
                 //System.out.println("\tPosition is: " + temp.getRow() + temp.getColumn());
-                assert(temp.getRow() == x);
-                assert(temp.getColumn() == 'D');
+                assert(temp.getRow() == j);
+                assert(temp.getColumn() == x);
                 x++;
+
             }
             j++;
         }

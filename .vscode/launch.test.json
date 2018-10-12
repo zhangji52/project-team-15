@@ -1,0 +1,30 @@
+{
+    "run": {
+        "default": "",
+        "items": [
+            {
+                "name": "battleships",
+                "projectName": "battleships",
+                "workingDirectory": "c:\\Users\\dabom\\Documents\\GitHub\\project-team-15",
+                "args": [],
+                "vmargs": [],
+                "env": {},
+                "preLaunchTask": ""
+            }
+        ]
+    },
+    "debug": {
+        "default": "",
+        "items": [
+            {
+                "name": "battleships",
+                "projectName": "battleships",
+                "workingDirectory": "c:\\Users\\dabom\\Documents\\GitHub\\project-team-15",
+                "args": [],
+                "vmargs": [],
+                "env": {},
+                "preLaunchTask": ""
+            }
+        ]
+    }
+}

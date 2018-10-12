@@ -10,8 +10,6 @@ import java.util.Iterator;
 
 public class Ship {
 	@JsonProperty private List<Square> occupiedSquares;
-	@JsonIgnore private int shipLength;
-	@JsonIgnore String classOfShip;
 
 	public Ship() {
 		occupiedSquares = new ArrayList<>();
@@ -26,14 +24,11 @@ public class Ship {
 			Square curSquare = it.next();
 			this.occupiedSquares.add(new Square(curSquare.getRow(), curSquare.getColumn()));
 		}
-
-		shipLength = otherShip.shipLength;
-		//System.out.println("\t\tCreating ship of length: " + this.shipLength + " from another ship");
 	}
 	
 	public Ship(String kind) {
-		classOfShip = kind;
 		// This switch statement will determine how long our ship is, based on the type string given
+		int shipLength=0;
 		switch(kind) {
 			case "MINESWEEPER":
 				shipLength = 2;
@@ -49,49 +44,14 @@ public class Ship {
 
 		}
 
-		//System.out.println("\t\tCreating ship of length: " + this.shipLength);
-
 		this.occupiedSquares = new ArrayList<>();
 
-		for(int i = 0; i < this.shipLength; i++) {
+		for(int i = 0; i < shipLength; i++) {
 			this.occupiedSquares.add(new Square());
 		}
-	}
-
-	//Helper function for testing the boards placement function
-	//allows us to check if 1 of all 3 class of ships has been placed
-	public void setKind(String kind) {
-		classOfShip = kind;
-		switch(kind) {
-			case "MINESWEEPER":
-				shipLength = 2;
-				break;
-
-			case "DESTROYER":
-				shipLength = 3;
-				break;
-
-			case "BATTLESHIP":
-				shipLength = 4;
-				break;
-
-		}
-		
-		this.occupiedSquares = new ArrayList<>();
-
-		for(int i = 0; i < this.shipLength; i++) {
-			this.occupiedSquares.add(new Square());
-		}
-	}
-
-	//returns the type of ship this is as a string
-	public @JsonIgnore String getKind(){
-		return classOfShip;
 	}
 
 	public void setLocation(int x, char y, boolean isVertical) {
-
-		//System.out.println("\t\t Ship location set to: " + x + y + isVertical);
 
 		Iterator<Square> iterator = this.occupiedSquares.iterator();
 		while (iterator.hasNext()) {
@@ -115,6 +75,7 @@ public class Ship {
 	}
 
 	public @JsonIgnore int getLength() {
-		return shipLength;
+
+		return this.occupiedSquares.size();
 	}
 }
