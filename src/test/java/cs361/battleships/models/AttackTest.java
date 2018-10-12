@@ -35,7 +35,5 @@ public class AttackTest {
         //sink the ship
         assert(board.attack(8, 'I').getResult() == refSink.getResult());
         assert(board.attack(9, 'I').getResult() == refMiss.getResult());
-
-
     }
 }
