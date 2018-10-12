@@ -8,14 +8,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Board {
-
+	
 	@JsonProperty public List<Ship> ships;
+	@JsonProperty public List<Result> results;
 
 	/*
 	DO NOT change the signature of this method. It is used by the grading scripts.
 	 */
 	public Board() {
 		ships = new ArrayList<>();
+		results = new ArrayList<>();
 	}
 
 	/*
@@ -29,21 +31,21 @@ public class Board {
 		}
 
 		//checks to make sure ships don't get placed on top of each other
-        //I'm also hijacking this to check whether or not this ship type has already been placed.
+		//I'm also hijacking this to check whether or not this ship type has already been placed.
 		Iterator<Ship> it = this.ships.iterator();
-        while (it.hasNext()) {
-            //System.out.println("J is: " +j);
-            Ship tempShip = it.next();
+		while (it.hasNext()) {
+			//System.out.println("J is: " +j);
+			Ship tempShip = it.next();
 
-            if (ship.getLength() == tempShip.getLength()) {
-                //This type of ship has already been placed, so don't let them place another one!!!
-                return false;
-            }
+			if (ship.getLength() == tempShip.getLength()) {
+				//This type of ship has already been placed, so don't let them place another one!!!
+				return false;
+			}
 
-            List<Square> sweepSquares = tempShip.getOccupiedSquares();
-            Iterator<Square> jt = sweepSquares.iterator();
-            while (jt.hasNext()) {
-                Square tempSquare = jt.next();
+			List<Square> sweepSquares = tempShip.getOccupiedSquares();
+			Iterator<Square> jt = sweepSquares.iterator();
+			while (jt.hasNext()) {
+				Square tempSquare = jt.next();
 				//Need to make sure no blocks in this ship will intersect with any other blocks in ANY other ship
 				for (int i = 0; i < ship.getLength(); i++) {
 					if (isVertical) {
@@ -58,7 +60,7 @@ public class Board {
 						}
 					}
 				}
-            }
+			}
 		}
 
 		int effectiveY = y - 'A' + 1;
@@ -89,8 +91,30 @@ public class Board {
 	DO NOT change the signature of this method. It is used by the grading scripts.
 	 */
 	public Result attack(int x, char y) {
-		//TODO Implement
-		return null;
+		//The result type variable the will be returned upon checks
+		//Default return Result is a miss at input square
+		Result ShuttleResult = new Result();
+		ShuttleResult.setResult(AttackStatus.MISS);
+
+		//Checks for validity of attack placement
+		if(((x <= 10) && (x > 0)) && (((y - 'A') <= 10) && (y - 'A' +1 )> 0)){
+			Square square = new Square(x, y);
+			ShuttleResult.setLocation(square);
+			for (int i = 0; i < ships.size(); i++) {
+				if (ships.get(i).checkHit(x, y)) {
+					ShuttleResult.setResult(ships.get(i).checkHitStatus(x, y));
+					ShuttleResult.setShip(ships.get(i));
+				}
+			}
+			results.add(ShuttleResult);
+			return ShuttleResult;
+		}
+		else {
+			ShuttleResult.setResult(AttackStatus.INVALID);
+		}
+
+		//Adds the result of the attack to the results list in board, and returns the result of the attack attempt
+		return ShuttleResult;
 	}
 
 	public List<Ship> getShips() {
@@ -102,11 +126,10 @@ public class Board {
 	}
 
 	public List<Result> getAttacks() {
-		//TODO implement
-		return null;
+		return results;
 	}
 
 	public void setAttacks(List<Result> attacks) {
-		//TODO implement
+		results = attacks;
 	}
 }

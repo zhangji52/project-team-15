@@ -6,6 +6,9 @@ public class Square {
 	private int row;
 	private char column;
 
+	//Helper variable for declairing a ship "sunk"
+	private AttackStatus squareEvent = null;
+
 	public Square(){}
 
 	public Square(int row, char column) {
@@ -27,5 +30,13 @@ public class Square {
 
 	public void setRow(int row) {
 		this.row = row;
+	}
+
+	public AttackStatus getSquareEvent(){
+		return squareEvent;
+	}
+
+	public void setSquareEvent(AttackStatus toSet){
+		squareEvent = toSet;
 	}
 }

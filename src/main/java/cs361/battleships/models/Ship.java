@@ -8,12 +8,21 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Iterator;
 
+
+import static cs361.battleships.models.AttackStatus.HIT;
+import static cs361.battleships.models.AttackStatus.MISS;
+import static cs361.battleships.models.AttackStatus.SUNK;
+
 public class Ship {
-	@JsonProperty private List<Square> occupiedSquares;
+
+	@JsonProperty
+	private List<Square> occupiedSquares;
+
 
 	public Ship() {
 		occupiedSquares = new ArrayList<>();
 	}
+
 
 	public Ship(Ship otherShip) {
 		this.occupiedSquares = new ArrayList<>();
@@ -25,7 +34,9 @@ public class Ship {
 			this.occupiedSquares.add(new Square(curSquare.getRow(), curSquare.getColumn()));
 		}
 	}
-	
+
+
+
 	public Ship(String kind) {
 		// This switch statement will determine how long our ship is, based on the type string given
 		int shipLength=0;
@@ -77,5 +88,40 @@ public class Ship {
 	public @JsonIgnore int getLength() {
 
 		return this.occupiedSquares.size();
+	}
+
+	public boolean checkHit(int x, char y) {
+
+		for (int i= 0;i < occupiedSquares.size(); i++)
+		{
+			if (occupiedSquares.get(i).getRow() == x && occupiedSquares.get(i).getColumn() == y)
+				return true;
+		}
+		return false;
+	}
+
+	//Returns an attack status baised off the location given
+	public AttackStatus checkHitStatus(int x, char y) {
+		int hitCounter = 0;
+		AttackStatus toSend = MISS;
+
+		//cycles through the occupiedSquares to check if the hit location is owned by a ship
+		for (int i = 0; i < occupiedSquares.size(); i++){
+			if((occupiedSquares.get(i).getRow() == x) && (occupiedSquares.get(i).getColumn() == y)){
+				toSend = HIT;
+				occupiedSquares.get(i).setSquareEvent(HIT);
+			}
+
+			//Checks for the number of hits in relation to the ships size to check if theres been a sink
+			if(occupiedSquares.get(i).getSquareEvent() == HIT){
+				hitCounter += 1;
+			}
+		}
+
+
+		if((hitCounter == occupiedSquares.size()) && (toSend == HIT)){
+			toSend = SUNK;
+		}
+		return toSend;
 	}
 }
