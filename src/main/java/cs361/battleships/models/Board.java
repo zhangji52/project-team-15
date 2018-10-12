@@ -95,6 +95,7 @@ public class Board {
 		//Default return Result is a miss at input square
 		Result ShuttleResult = new Result();
 		ShuttleResult.setResult(AttackStatus.MISS);
+		int shipsSunk = 0;
 
 		//Checks for validity of attack placement
 		if(((x <= 10) && (x > 0)) && (((y - 'A') <= 10) && (y - 'A' +1 )> 0)){
@@ -107,10 +108,22 @@ public class Board {
 				}
 			}
 			results.add(ShuttleResult);
-			return ShuttleResult;
 		}
 		else {
 			ShuttleResult.setResult(AttackStatus.INVALID);
+		}
+
+		for (int i = 0; i < ships.size(); i++) {
+			for (int j = 0; j < ships.get(i).getOccupiedSquares().size(); j++) {
+				if(ships.get(i).getOccupiedSquares().get(j).getSquareEvent() == AttackStatus.SUNK){
+					shipsSunk += 1;
+				}
+			}
+
+		}
+
+		if(shipsSunk == 3){
+			ShuttleResult.setResult(AttackStatus.SURRENDER);
 		}
 
 		//Adds the result of the attack to the results list in board, and returns the result of the attack attempt

@@ -66,7 +66,7 @@ public class Game {
 
     private boolean randVertical() {
         Random randNum = new Random();
-        int decision = randNum.nextInt(1);
+        int decision = (randNum.nextInt(50) % 2);
         if (decision == 1)
         {
             return true;

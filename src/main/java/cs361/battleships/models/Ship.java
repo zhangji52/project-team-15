@@ -36,11 +36,10 @@ public class Ship {
 	}
 
 
-
 	public Ship(String kind) {
 		// This switch statement will determine how long our ship is, based on the type string given
-		int shipLength=0;
-		switch(kind) {
+		int shipLength = 0;
+		switch (kind) {
 			case "MINESWEEPER":
 				shipLength = 2;
 				break;
@@ -57,7 +56,7 @@ public class Ship {
 
 		this.occupiedSquares = new ArrayList<>();
 
-		for(int i = 0; i < shipLength; i++) {
+		for (int i = 0; i < shipLength; i++) {
 			this.occupiedSquares.add(new Square());
 		}
 	}
@@ -85,15 +84,15 @@ public class Ship {
 		return this.occupiedSquares;
 	}
 
-	public @JsonIgnore int getLength() {
+	public @JsonIgnore
+	int getLength() {
 
 		return this.occupiedSquares.size();
 	}
 
 	public boolean checkHit(int x, char y) {
 
-		for (int i= 0;i < occupiedSquares.size(); i++)
-		{
+		for (int i = 0; i < occupiedSquares.size(); i++) {
 			if (occupiedSquares.get(i).getRow() == x && occupiedSquares.get(i).getColumn() == y)
 				return true;
 		}
@@ -106,21 +105,27 @@ public class Ship {
 		AttackStatus toSend = MISS;
 
 		//cycles through the occupiedSquares to check if the hit location is owned by a ship
-		for (int i = 0; i < occupiedSquares.size(); i++){
-			if((occupiedSquares.get(i).getRow() == x) && (occupiedSquares.get(i).getColumn() == y)){
+		for (int i = 0; i < occupiedSquares.size(); i++) {
+			if ((occupiedSquares.get(i).getRow() == x) && (occupiedSquares.get(i).getColumn() == y)) {
 				toSend = HIT;
 				occupiedSquares.get(i).setSquareEvent(HIT);
 			}
 
 			//Checks for the number of hits in relation to the ships size to check if theres been a sink
-			if(occupiedSquares.get(i).getSquareEvent() == HIT){
+			if (occupiedSquares.get(i).getSquareEvent() == HIT) {
 				hitCounter += 1;
 			}
 		}
 
 
-		if((hitCounter == occupiedSquares.size()) && (toSend == HIT)){
+		if ((hitCounter == occupiedSquares.size()) && (toSend == HIT)) {
 			toSend = SUNK;
+			for (int i = 0; i < occupiedSquares.size(); i++) {
+				if ((occupiedSquares.get(i).getRow() == x) && (occupiedSquares.get(i).getColumn() == y)) {
+					occupiedSquares.get(i).setSquareEvent(SUNK);
+				}
+			}
+
 		}
 		return toSend;
 	}
