@@ -1,34 +1,39 @@
 package cs361.battleships.models;
 
-import java.sql.ResultSet;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Result {
 
-	private AttackStatus attackResult;
-	private Ship resultShip;
-	private Square location;
+	@JsonProperty private AtackStatus result;
+	@JsonProperty private Square location;
+	@JsonProperty private Ship ship;
 
-	public AttackStatus getResult() {			 //Returns the result
-		return attackResult;
+	@SuppressWarnings("unused")
+	public Result() {
 	}
 
-	public void setResult(AttackStatus result) { //Sets the attackResult variable
-		attackResult = result;
+	public Result(Square location) {
+		result = AtackStatus.MISS;
+		this.location = location;
 	}
 
-	public Ship getShip() {						 //Returns the ship
-		return resultShip;
+	public AtackStatus getResult() {
+		return result;
 	}
 
-	public void setShip(Ship ship) {         	//Sets ship variable
-		resultShip = ship;
+	public void setResult(AtackStatus result) {
+		this.result = result;
 	}
 
-	public Square getLocation() { 				//Returns the Square location on the board
+	public Ship getShip() {
+		return ship;
+	}
+
+	public void setShip(Ship ship) {
+		this.ship = ship;
+	}
+
+	public Square getLocation() {
 		return location;
-	}
-
-	public void setLocation(Square square) {   //Sets passed in square as the value for location variable
-		location = square;
 	}
 }

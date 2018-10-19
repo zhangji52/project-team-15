@@ -2,131 +2,116 @@ package cs361.battleships.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.hibernate.hql.internal.ast.SqlASTFactory;
+import com.google.common.collect.Sets;
+import com.mchange.v1.util.CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Iterator;
-
-
-import static cs361.battleships.models.AttackStatus.HIT;
-import static cs361.battleships.models.AttackStatus.MISS;
-import static cs361.battleships.models.AttackStatus.SUNK;
+import java.util.Optional;
+import java.util.Set;
 
 public class Ship {
 
-	@JsonProperty
-	private List<Square> occupiedSquares;
-
+	@JsonProperty private String kind;
+	@JsonProperty private List<Square> occupiedSquares;
+	@JsonProperty private int size;
 
 	public Ship() {
 		occupiedSquares = new ArrayList<>();
 	}
-
-
-	public Ship(Ship otherShip) {
-		this.occupiedSquares = new ArrayList<>();
-
-		List<Square> otherSquares = otherShip.getOccupiedSquares();
-		Iterator<Square> it = otherSquares.iterator();
-		while (it.hasNext()) {
-			Square curSquare = it.next();
-			this.occupiedSquares.add(new Square(curSquare.getRow(), curSquare.getColumn()));
-		}
-	}
-
-
+	
 	public Ship(String kind) {
-		// This switch statement will determine how long our ship is, based on the type string given
-		int shipLength = 0;
-		switch (kind) {
+		this();
+		this.kind = kind;
+		switch(kind) {
 			case "MINESWEEPER":
-				shipLength = 2;
+				size = 2;
 				break;
-
 			case "DESTROYER":
-				shipLength = 3;
+				size = 3;
 				break;
-
 			case "BATTLESHIP":
-				shipLength = 4;
+				size = 4;
 				break;
-
-		}
-
-		this.occupiedSquares = new ArrayList<>();
-
-		for (int i = 0; i < shipLength; i++) {
-			this.occupiedSquares.add(new Square());
-		}
-	}
-
-	public void setLocation(int x, char y, boolean isVertical) {
-
-		Iterator<Square> iterator = this.occupiedSquares.iterator();
-		while (iterator.hasNext()) {
-			// This is INTENDED to take each of the squares stored in this ship, and set their location on the board
-			// This way ships themselves can keep track of where they are
-
-			Square curSquare = iterator.next();
-			curSquare.setRow(x);
-			curSquare.setColumn(y);
-
-			if (isVertical) {
-				x++;
-			} else {
-				y++;
-			}
 		}
 	}
 
 	public List<Square> getOccupiedSquares() {
-		return this.occupiedSquares;
+		return occupiedSquares;
 	}
 
-	public @JsonIgnore
-	int getLength() {
-
-		return this.occupiedSquares.size();
+	public void place(char col, int row, boolean isVertical) {
+		for (int i=0; i<size; i++) {
+			if (isVertical) {
+				occupiedSquares.add(new Square(row+i, col));
+			} else {
+				occupiedSquares.add(new Square(row, (char) (col + i)));
+			}
+		}
 	}
 
-	public boolean checkHit(int x, char y) {
-
-		for (int i = 0; i < occupiedSquares.size(); i++) {
-			if (occupiedSquares.get(i).getRow() == x && occupiedSquares.get(i).getColumn() == y)
-				return true;
-		}
-		return false;
+	public boolean overlaps(Ship other) {
+		Set<Square> thisSquares = Set.copyOf(getOccupiedSquares());
+		Set<Square> otherSquares = Set.copyOf(other.getOccupiedSquares());
+		Sets.SetView<Square> intersection = Sets.intersection(thisSquares, otherSquares);
+		return intersection.size() != 0;
 	}
 
-	//Returns an attack status baised off the location given
-	public AttackStatus checkHitStatus(int x, char y) {
-		int hitCounter = 0;
-		AttackStatus toSend = MISS;
+	public boolean isAtLocation(Square location) {
+		return getOccupiedSquares().stream().anyMatch(s -> s.equals(location));
+	}
 
-		//cycles through the occupiedSquares to check if the hit location is owned by a ship
-		for (int i = 0; i < occupiedSquares.size(); i++) {
-			if ((occupiedSquares.get(i).getRow() == x) && (occupiedSquares.get(i).getColumn() == y)) {
-				toSend = HIT;
-				occupiedSquares.get(i).setSquareEvent(HIT);
-			}
+	public String getKind() {
+		return kind;
+	}
 
-			//Checks for the number of hits in relation to the ships size to check if theres been a sink
-			if (occupiedSquares.get(i).getSquareEvent() == HIT) {
-				hitCounter += 1;
-			}
+	public Result attack(int x, char y) {
+		var attackedLocation = new Square(x, y);
+		var square = getOccupiedSquares().stream().filter(s -> s.equals(attackedLocation)).findFirst();
+		if (!square.isPresent()) {
+			return new Result(attackedLocation);
 		}
-
-
-		if ((hitCounter == occupiedSquares.size()) && (toSend == HIT)) {
-			toSend = SUNK;
-			for (int i = 0; i < occupiedSquares.size(); i++) {
-				if ((occupiedSquares.get(i).getRow() == x) && (occupiedSquares.get(i).getColumn() == y)) {
-					occupiedSquares.get(i).setSquareEvent(SUNK);
-				}
-			}
-
+		var attackedSquare = square.get();
+		if (attackedSquare.isHit()) {
+			var result = new Result(attackedLocation);
+			result.setResult(AtackStatus.INVALID);
+			return result;
 		}
-		return toSend;
+		attackedSquare.hit();
+		var result = new Result(attackedLocation);
+		result.setShip(this);
+		if (isSunk()) {
+			result.setResult(AtackStatus.SUNK);
+		} else {
+			result.setResult(AtackStatus.HIT);
+		}
+		return result;
+	}
+
+	@JsonIgnore
+	public boolean isSunk() {
+		return getOccupiedSquares().stream().allMatch(s -> s.isHit());
+	}
+
+	@Override
+	public boolean equals(Object other) {
+		if (!(other instanceof Ship)) {
+			return false;
+		}
+		var otherShip = (Ship) other;
+
+		return this.kind.equals(otherShip.kind)
+				&& this.size == otherShip.size
+				&& this.occupiedSquares.equals(otherShip.occupiedSquares);
+	}
+
+	@Override
+	public int hashCode() {
+		return 33 * kind.hashCode() + 23 * size + 17 * occupiedSquares.hashCode();
+	}
+
+	@Override
+	public String toString() {
+		return kind + occupiedSquares.toString();
 	}
 }

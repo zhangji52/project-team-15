@@ -1,15 +1,17 @@
 package cs361.battleships.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 @SuppressWarnings("unused")
 public class Square {
 
-	private int row;
-	private char column;
+	@JsonProperty private int row;
+	@JsonProperty private char column;
+	@JsonProperty private boolean hit = false;
 
-	//Helper variable for declairing a ship "sunk"
-	private AttackStatus squareEvent = null;
-
-	public Square(){}
+	public Square() {
+	}
 
 	public Square(int row, char column) {
 		this.row = row;
@@ -20,23 +22,39 @@ public class Square {
 		return column;
 	}
 
-	public void setColumn(char column) {
-		this.column = column;
-	}
-	
 	public int getRow() {
 		return row;
 	}
 
-	public void setRow(int row) {
-		this.row = row;
+
+	@Override
+	public boolean equals(Object other) {
+		if (other instanceof Square) {
+			return ((Square) other).row == this.row && ((Square) other).column == this.column;
+		}
+		return false;
 	}
 
-	public AttackStatus getSquareEvent(){
-		return squareEvent;
+	@Override
+	public int hashCode() {
+		return 31 * row + column;
 	}
 
-	public void setSquareEvent(AttackStatus toSet){
-		squareEvent = toSet;
+	@JsonIgnore
+	public boolean isOutOfBounds() {
+		return row > 10 || row < 1 || column > 'J' || column < 'A';
+	}
+
+	public boolean isHit() {
+		return hit;
+	}
+
+	public void hit() {
+		hit = true;
+	}
+
+	@Override
+	public String toString() {
+		return "(" + row + ", " + column + ')';
 	}
 }
