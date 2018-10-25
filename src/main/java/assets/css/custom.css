@@ -14,7 +14,14 @@
     border: 1px solid black;
     width: 30px;
 }
+.dialogBox {
+    border: 1px solid black;
+    width: 125px;
+    height: 125px;
+    padding:50px;
+    margin: 25px;
 
+}
 td:hover {
     background-color: gray;
 }
