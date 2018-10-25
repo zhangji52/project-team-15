@@ -15,10 +15,11 @@
     width: 30px;
 }
 .dialogBox {
+    text-align: justify;
+    text-align-last: center;
     resize: none;
-    border: 1px solid black;
-    width: 125px;
-    height: 125px;
+    width: 175px;
+    height: 150px;
     padding:50px;
     margin: 25px;
 
