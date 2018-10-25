@@ -80,6 +80,7 @@ function cellClick() {
             game = data;
             redrawGrid();
         })
+
     }
 }
 
@@ -87,7 +88,7 @@ function sendXhr(method, url, data, handler) {
     var req = new XMLHttpRequest();
     req.addEventListener("load", function(event) {
         if (req.status != 200) {
-            alert("Cannot complete the action");
+            document.getElementById("textBox").value += "Invalid action\n"
             return;
         }
         handler(JSON.parse(req.responseText));
