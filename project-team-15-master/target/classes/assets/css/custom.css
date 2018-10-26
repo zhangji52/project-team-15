@@ -1,0 +1,88 @@
+/* Add additional stylesheets below
+-------------------------------------------------- */
+html {
+    background-image: url("Pluto2.jpg");
+    background-repeat: no-repeat;
+    background-position: center top;
+    background-color: black;
+    background-attachment: fixed;
+}
+
+h1 {
+    text-align: center;
+}
+
+.row {
+  position: static;
+  white-space: nowrap;
+  text-align: center;
+}
+
+
+.battleGrid {
+    border: 1px solid white;
+    border-spacing: 0px;
+}
+
+.battleGrid tr {
+    border: 1px solid white;
+    height: 30px;
+}
+.battleGrid td {
+    border: 1px solid white;
+    width: 30px;
+}
+.dialogBox {
+    text-align: justify;
+    text-align-last: center;
+    resize: none;
+    width: 200px;
+    height: 250px;
+    padding:5px;
+    margin: 15px;
+
+
+}
+td:hover {
+    background-color: silver;
+}
+
+.placed {
+    background-color: silver;
+}
+
+.occupied {
+    background-color: white;
+}
+
+.hit {
+    background-color: orange;
+}
+
+.sink {
+    background-color: red;
+}
+
+.miss {
+    background-color: blue;
+}
+
+
+.invalid {
+    background-color: rgba(156, 31, 0, 0.836) !important;
+}
+
+a.restartButton{
+    display: block;
+    text-align: center;
+    -webkit-appearance: button;
+    appearance: button;
+    text-decoration: none;
+    color: initial;
+    text-color: white;
+    font-weight: bold;
+    margin-left: 70px;
+    margin-right: 70px;
+
+}
+
