@@ -15,11 +15,12 @@
     width: 30px;
 }
 .dialogBox {
+    text-align: justify;
+    text-align-last: center;
     resize: none;
-    border: 1px solid black;
-    width: 125px;
-    height: 125px;
-    padding:50px;
+    width: 200px;
+    height: 250px;
+    padding:5px;
     margin: 25px;
 
 }
@@ -45,4 +46,9 @@ td:hover {
 
 .miss {
     background-color: blue;
+}
+
+
+.invalid {
+    background-color: rgba(156, 31, 0, 0.836) !important;
 }
