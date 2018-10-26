@@ -1,17 +1,24 @@
 /* Add additional stylesheets below
 -------------------------------------------------- */
+html {
+    background-image: url("Pluto.png");
+    background-repeat: no-repeat;
+    background-position: center top;
+    background-color: black;
+    background-attachment: fixed;
+}
 
 .battleGrid {
-    border: 1px solid black;
+    border: 1px solid white;
     border-spacing: 0px;
 }
 
 .battleGrid tr {
-    border: 1px solid black;
+    border: 1px solid white;
     height: 30px;
 }
 .battleGrid td {
-    border: 1px solid black;
+    border: 1px solid white;
     width: 30px;
 }
 .dialogBox {
@@ -33,7 +40,7 @@ td:hover {
 }
 
 .occupied {
-    background-color: black;
+    background-color: white;
 }
 
 .hit {
