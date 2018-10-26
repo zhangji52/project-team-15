@@ -43,8 +43,8 @@ function redrawGrid() {
     game.playersBoard.ships.forEach((ship) => ship.occupiedSquares.forEach((square) => {
         document.getElementById("player").rows[square.row-1].cells[square.column.charCodeAt(0) - 'A'.charCodeAt(0)].classList.add("occupied");
     }));
-    markHits(game.opponentsBoard, "opponent", "You won the game!");
-    markHits(game.playersBoard, "player", "You lost the game :(");
+    markHits(game.opponentsBoard, "opponent", "You won the game!\n");
+    markHits(game.playersBoard, "player", "You lost the game :(\n");
 }
 
 var oldListener;
@@ -88,7 +88,7 @@ function sendXhr(method, url, data, handler) {
     var req = new XMLHttpRequest();
     req.addEventListener("load", function(event) {
         if (req.status != 200) {
-            document.getElementById("textBox").value +="Invalid action\n"
+            document.getElementById("textBox").value ="Invalid action\n"
             return;
         }
         handler(JSON.parse(req.responseText));
