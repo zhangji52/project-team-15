@@ -11,13 +11,13 @@
     <div class="container">
         
         <#include "header.ftl.html"/>
-        
+
         <#if (flash.error)??>
             <div class="alert alert-danger">
                 ${flash.error}
             </div>
         </#if>
-        
+
         <#if (flash.success)??>
             <div class="alert alert-success">
                 ${flash.success}
@@ -27,7 +27,7 @@
         <#nested/>
 
         <#include "footer.ftl.html"/>
-        
+
     </div> <!-- /container -->
 </body>
 </html>
