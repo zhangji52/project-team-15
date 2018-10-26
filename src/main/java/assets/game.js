@@ -102,6 +102,8 @@ function place(size) {
     return function() {
         let row = this.parentNode.rowIndex;
         let col = this.cellIndex;
+        let invalidPlacement = false;
+        
         vertical = document.getElementById("is_vertical").checked;
         let table = document.getElementById("player");
         for (let i=0; i<size; i++) {
@@ -110,6 +112,8 @@ function place(size) {
                 let tableRow = table.rows[row+i];
                 if (tableRow === undefined) {
                     // ship is over the edge; let the back end deal with it
+                    // we also need to turn them red though, so toggle this bool here
+                    invalidPlacement = true;
                     break;
                 }
                 cell = tableRow.cells[col];
@@ -118,9 +122,36 @@ function place(size) {
             }
             if (cell === undefined) {
                 // ship is over the edge; let the back end deal with it
+                // we also need to turn them red though, so toggle this bool here
+                invalidPlacement = true;
                 break;
             }
+            if (cell.classList.contains("occupied")) {
+                // we need to turn them red, so toggle this bool here
+                invalidPlacement = true;
+            }
             cell.classList.toggle("placed");
+        }
+        if (invalidPlacement) {
+            for (let i = 0; i < size; i++) {
+                let cell;
+                if(vertical) {
+                    let tableRow = table.rows[row+i];
+                    if (tableRow === undefined) {
+                        // ship is over the edge; let the back end deal with it
+                        break;
+                    }
+                    cell = tableRow.cells[col];
+                } else {
+                    cell = table.rows[row].cells[col+i];
+                }
+                if (cell === undefined) {
+                    // ship is over the edge; let the back end deal with it
+                    break;
+                }
+                cell.classList.toggle("invalid");
+            }
+            
         }
     }
 }

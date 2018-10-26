@@ -47,3 +47,8 @@ td:hover {
 .miss {
     background-color: blue;
 }
+
+
+.invalid {
+    background-color: rgba(156, 31, 0, 0.836) !important;
+}
