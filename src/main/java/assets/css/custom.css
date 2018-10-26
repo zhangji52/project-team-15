@@ -1,12 +1,22 @@
 /* Add additional stylesheets below
 -------------------------------------------------- */
 html {
-    background-image: url("Pluto.png");
+    background-image: url("Pluto2.png");
     background-repeat: no-repeat;
     background-position: center top;
     background-color: black;
     background-attachment: fixed;
 }
+
+h1 {
+    text-align: center;
+}
+.row {
+  position: static;
+  white-space: nowrap;
+  text-align: center;
+}
+
 
 .battleGrid {
     border: 1px solid white;
