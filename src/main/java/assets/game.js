@@ -16,15 +16,46 @@ function makeGrid(table, isPlayer) {
     }
 }
 
+function outputTextBox(input) {
+    switch(input) {
+        case 0:
+            document.getElementById("textBox").value = "Ye missed scallywag!\n";
+            break;
+        case 1:
+            document.getElementById("textBox").value = "You may have hit me, yar...\n";
+            break;
+        case 2:
+            document.getElementById("textBox").value = "AAGHHHHH Ye sunk me precious booty!\n";
+            break;
+        case 3:
+            document.getElementById("textBox").value = "Arrrgh ye placed a ship from the harbor\n";
+            break;
+        case 4:
+            document.getElementById("textBox").value = "There is a fleet ahead! FIRE CANNONS!\n";
+            break;
+
+    }
+
+}
+
 function markHits(board, elementId, surrenderText) {
     board.attacks.forEach((attack) => {
         let className;
-        if (attack.result === "MISS")
+        if (attack.result === "MISS"){
             className = "miss";
-        else if (attack.result === "HIT")
-            className = "hit";
-        else if (attack.result === "SUNK")
+            if(elementId === "opponent")
+                outputTextBox(0);
+            }
+        else if (attack.result === "HIT"){
             className = "hit"
+            if(elementId === "opponent")
+                outputTextBox(1);
+            }
+        else if (attack.result === "SUNK"){
+            className = "hit"
+            if(elementId === "opponent")
+                outputTextBox(2);
+            }
         else if (attack.result === "SURRENDER")
             document.getElementById("textBox").value = surrenderText.toString();
         document.getElementById(elementId).rows[attack.location.row-1].cells[attack.location.column.charCodeAt(0) - 'A'.charCodeAt(0)].classList.add(className);
@@ -71,8 +102,11 @@ function cellClick() {
             redrawGrid();
             placedShips++;
             if (placedShips == 3) {
+                outputTextBox(4);
                 isSetup = false;
                 registerCellListener((e) => {});
+            } else {
+                outputTextBox(3);
             }
         });
     } else {
