@@ -68,6 +68,67 @@ td:hover {
 }
 
 
+#dock {
+    width:150px;
+    height:180px;
+    outline:2px solid;
+    float: left;
+}
+
+.labelBox {
+    width:150px;
+    height:20px;
+    outline: 0px solid;
+}
+
+.topBox {
+    width:150px;
+    height:140px;
+    outline:1px solid;
+}
+
+.battleship {
+    width:20px;
+    height:100px;
+    float:left;
+    outline: 0px;
+    margin-top:10px;
+    margin-left:10px;
+}
+
+.destroyer {
+    width:20px;
+    height:80px;
+    float:left;
+    outline:0px solid;
+    margin-top: 10px;
+    margin-left:25px;
+}
+
+.minesweeper {
+    width:20px;
+    height:40px;
+    float:left;
+    outline: 0px solid;
+    margin-top:10px;
+    margin-left:25px;
+}
+
+.box {
+    width:20px;
+    height:20px;
+    float:top;
+    outline:1px solid;
+}
+
+.bottomBox {
+height:20px;
+width:150px;
+}
+
+.vertical {
+    margin-left:35px;
+}
 .invalid {
     background-color: rgba(156, 31, 0, 0.836) !important;
 }
@@ -84,4 +145,3 @@ a.restartButton{
     margin-right: 70px;
 
 }
-
