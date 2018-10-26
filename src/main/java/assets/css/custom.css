@@ -11,6 +11,7 @@ html {
 h1 {
     text-align: center;
 }
+
 .row {
   position: static;
   white-space: nowrap;
@@ -38,7 +39,8 @@ h1 {
     width: 200px;
     height: 250px;
     padding:5px;
-    margin: 25px;
+    margin: 15px;
+
 
 }
 td:hover {
@@ -69,3 +71,17 @@ td:hover {
 .invalid {
     background-color: rgba(156, 31, 0, 0.836) !important;
 }
+
+a.restartButton{
+    display: block;
+    text-align: center;
+    -webkit-appearance: button;
+    appearance: button;
+    text-decoration: none;
+    color: initial;
+    font-weight: bold;
+    margin-left: 70px;
+    margin-right: 70px;
+
+}
+
