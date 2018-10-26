@@ -5,16 +5,48 @@
 <h1 style="color:white;">SpacePirates!</h1>
 
 <div class="row">
-    <div class="column" style="display: inline-block">
-        <ul>
-            <li><button id="place_minesweeper">Place Minesweeper</button></li>
-            <li><button id="place_destroyer">Place Destroyer</button></li>
-            <li><button id="place_battleship">Place Battleship</button></li>
-            <li style="color:white;"><input type="checkbox" id="is_vertical">Vertical</input></li>
-        </ul>
+    <div class="column" id="dock">
+        <div class="labelBox"><center>Select a Ship</center></div>
+        <div class="topBox">
+            <!--battleship-->
+            <div class="battleship">
+                <button class="place_battleship" id="place_battleship">
+                    <div class="box"></div>
+                    <div class="box"></div>
+                    <div class="box"></div>
+                    <div class="box"></div>
+                </button>
+            </div>
+            <!--destroyer-->
+            <div class="destroyer">
+                <button class="place_destroyer" id="place_destroyer">
+                    <div class="box"></div>
+                    <div class="box"></div>
+                    <div class="box"></div>
+                </button>
+            </div>
+            <!--minesweeper-->
+            <div class="minesweeper">
+                <button class="place_minesweeper" id="place_minesweeper">
+                    <div class="box"></div>
+                    <div class="box"></div>
+                </button>
+            </div>
+        </div>
+        <!--vertical button-->
+        <div class="bottomBox">
+            <div class="vertical">
+                <input type="checkbox" id="is_vertical">Vertical</input>
+            </div>
+        </div>
     </div>
     <div class="column" style="display: inline-block">
+
         <table id="player" class="battleGrid">
+        </table>
+    </div>
+    <div class="column" style="display: inline-block">
+        <table id="opponent" class="battleGrid">
         </table>
     </div>
     <div class="column" style="display: inline-block">
