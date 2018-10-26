@@ -10,12 +10,20 @@
     border: 1px solid black;
     height: 30px;
 }
-
 .battleGrid td {
     border: 1px solid black;
     width: 30px;
 }
+.dialogBox {
+    text-align: justify;
+    text-align-last: center;
+    resize: none;
+    width: 200px;
+    height: 250px;
+    padding:5px;
+    margin: 25px;
 
+}
 td:hover {
     background-color: gray;
 }
