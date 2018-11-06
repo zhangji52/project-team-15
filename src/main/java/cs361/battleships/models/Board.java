@@ -76,7 +76,10 @@ public class Board {
 		
 		return pulseResult;
 	}
+
 	private Result sonarPulse(Square s) {
+
+
 		return null;
 	}
 
