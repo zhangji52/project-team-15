@@ -1,17 +1,35 @@
 /* Add additional stylesheets below
 -------------------------------------------------- */
+html {
+    background-image: url("Pluto2.jpg");
+    background-repeat: no-repeat;
+    background-position: center top;
+    background-color: black;
+    background-attachment: fixed;
+}
+
+h1 {
+    text-align: center;
+}
+
+.row {
+  position: static;
+  white-space: nowrap;
+  text-align: center;
+}
+
 
 .battleGrid {
-    border: 1px solid black;
+    border: 1px solid white;
     border-spacing: 0px;
 }
 
 .battleGrid tr {
-    border: 1px solid black;
+    border: 1px solid white;
     height: 30px;
 }
 .battleGrid td {
-    border: 1px solid black;
+    border: 1px solid white;
     width: 30px;
 }
 .dialogBox {
@@ -26,15 +44,15 @@
 
 }
 td:hover {
-    background-color: gray;
+    background-color: silver;
 }
 
 .placed {
-    background-color: gray;
+    background-color: silver;
 }
 
 .occupied {
-    background-color: black;
+    background-color: white;
 }
 
 .hit {
@@ -61,9 +79,10 @@ a.restartButton{
     appearance: button;
     text-decoration: none;
     color: initial;
-    width 200px;
+    text-color: white;
     font-weight: bold;
     margin-left: 70px;
     margin-right: 70px;
 
 }
+

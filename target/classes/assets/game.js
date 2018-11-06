@@ -56,8 +56,10 @@ function markHits(board, elementId, surrenderText) {
             if(elementId === "opponent")
                 outputTextBox(2);
             }
-        else if (attack.result === "SURRENDER")
+        else if (attack.result === "SURRENDER"){
             document.getElementById("textBox").value = surrenderText.toString();
+            alert(surrenderText);
+            }
         document.getElementById(elementId).rows[attack.location.row-1].cells[attack.location.column.charCodeAt(0) - 'A'.charCodeAt(0)].classList.add(className);
     });
 }
