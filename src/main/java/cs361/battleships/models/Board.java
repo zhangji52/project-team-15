@@ -71,6 +71,15 @@ public class Board {
 		return attackResult;
 	}
 
+	private Result sonarPulse(int x, char y) {
+		Result pulseResult = sonarPulse(new Square(x, y));
+		
+		return pulseResult;
+	}
+	private Result sonarPulse(Square s) {
+		return null;
+	}
+
 	List<Ship> getShips() {
 		return ships;
 	}

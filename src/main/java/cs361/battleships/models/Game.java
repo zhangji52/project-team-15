@@ -50,6 +50,14 @@ public class Game {
         return true;
     }
 
+    // public boolean sonarPulse(int x, char y) {
+    //     Result sonarPulse = opponentsBoard.sonarPulse(x, y);
+    //     if (sonarPulse.getResult() == INVALID) {
+    //         return false;
+    //     }
+    //     return true;
+    // }
+
     private char randCol() {
         int random = new Random().nextInt(10);
         return (char) ('A' + random);
