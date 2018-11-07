@@ -71,13 +71,13 @@ public class Board {
 		return attackResult;
 	}
 
-	private Result sonarPulse(int x, char y) {
-		Result pulseResult = sonarPulse(new Square(x, y));
+	private List<Result> sonarPulse(int x, char y) {
+		List<Result> pulseResults = sonarPulse(new Square(x, y));
 		
-		return pulseResult;
+		return pulseResults;
 	}
 
-	private Result sonarPulse(Square s) {
+	private List<Result> sonarPulse(Square s) {
 
 
 		return null;

@@ -28,4 +28,9 @@ public enum AtackStatus {
 	 */
 	INVALID,
 
+	/**
+	 * The result if a ship was found, but no action was taken
+	 */
+	FOUND,
+
 }
