@@ -207,6 +207,11 @@ function initGame() {
         shipType = "BATTLESHIP";
        registerCellListener(place(4));
     });
+    document.getElementById("sonar_pulse").addEventListener("click", function(e) {
+        //sendXhr("POST", "/sonarPulse", {game: game, x: row, y: col}, function(data) {
+           // game = data;
+           // redrawGrid();
+    });
     sendXhr("GET", "/game", {}, function(data) {
         game = data;
     });
