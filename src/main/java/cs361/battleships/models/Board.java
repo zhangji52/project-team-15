@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.lang.Math;
 
 public class Board {
 
@@ -71,16 +72,41 @@ public class Board {
 		return attackResult;
 	}
 
-	private List<Result> sonarPulse(int x, char y) {
-		List<Result> pulseResults = sonarPulse(new Square(x, y));
+	public List<Result> sonarPulse(int x, char y) {
+		List<Result> pulseResults = new ArrayList<>();
+		
+		/**
+		 * Need to sonarPulseTest on squares in a two square radius, like shown
+		 * OOOOOOO
+		 * OOOXOOO
+		 * OOXXXOO
+		 * OXXTXXO
+		 * OOXXXOO
+		 * OOOXOOO
+		 * OOOOOOO
+		 * Where X are tested squares and T is the targeted square, passed in to this function
+		 */
+		for (int i = -2; i <= 2; i++) {
+			for (int j = (-2 + Math.abs(i)); j <= (2 - Math.abs(i)); j++){
+				pulseResults.add(sonarPulse(new Square(x + i, (char) (y + j))));
+			} 
+		}
 		
 		return pulseResults;
 	}
 
-	private List<Result> sonarPulse(Square s) {
-
-
-		return null;
+	private Result sonarPulse(Square s) {
+		var shipsAtLocation = ships.stream().filter(ship -> ship.isAtLocation(s)).collect(Collectors.toList());
+		if (shipsAtLocation.size() == 0) {
+			// Didn't find a ship, return a MISS
+			System.out.println("Returning miss result at: " + s.getColumn() + s.getRow());
+			var pulseResult = new Result(s);
+			return pulseResult;
+		} 
+		// Found a ship, return a FOUND
+		var pulseResult = new Result(s);
+		pulseResult.setResult(AtackStatus.FOUND);
+		return pulseResult;
 	}
 
 	List<Ship> getShips() {
