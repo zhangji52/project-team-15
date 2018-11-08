@@ -6,6 +6,9 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class BoardTest {
 
@@ -82,5 +85,32 @@ public class BoardTest {
         assertTrue(board.placeShip(new Ship("DESTROYER"), 6, 'A', false));
         assertFalse(board.placeShip(new Ship(""), 8, 'A', false));
 
+    }
+
+    @Test
+    public void testSonarPulse() {
+        board.placeShip(new Ship("MINESWEEPER"), 1, 'A', true);
+        board.placeShip(new Ship("BATTLESHIP"), 5, 'D', true);
+        board.placeShip(new Ship("DESTROYER"), 6, 'A', false);
+        List<Result> results = board.sonarPulse(5, 'D');
+
+        List<Square> trueResults = new ArrayList<>();
+        trueResults.add(new Square(5, 'D'));
+        trueResults.add(new Square(6, 'C'));
+        trueResults.add(new Square(6, 'D'));
+        trueResults.add(new Square(7, 'D'));
+        trueResults.forEach((s) -> assertTrue(results.stream().anyMatch(r -> r.getLocation().equals(s) && r.getResult() == AtackStatus.FOUND)));
+
+        List<Square> falseResults = new ArrayList<>();
+        falseResults.add(new Square(3, 'D'));
+        falseResults.add(new Square(4, 'C'));
+        falseResults.add(new Square(4, 'D'));
+        falseResults.add(new Square(4, 'E'));
+        falseResults.add(new Square(5, 'B'));
+        falseResults.add(new Square(5, 'C'));
+        falseResults.add(new Square(5, 'E'));
+        falseResults.add(new Square(5, 'F'));
+        falseResults.add(new Square(6, 'E'));
+        falseResults.forEach((s) -> assertTrue(results.stream().anyMatch(r -> r.getLocation().equals(s) && r.getResult() == AtackStatus.MISS)));
     }
 }
