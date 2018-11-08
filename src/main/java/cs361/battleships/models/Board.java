@@ -52,11 +52,11 @@ public class Board {
 	}
 
 	private Result attack(Square s) {
-		if (attacks.stream().anyMatch(r -> r.getLocation().equals(s))) {
-			var attackResult = new Result(s);
-			attackResult.setResult(AtackStatus.INVALID);
-			return attackResult;
-		}
+//		if (attacks.stream().anyMatch(r -> r.getLocation().equals(s))) {
+//			var attackResult = new Result(s);
+//			attackResult.setResult(AtackStatus.INVALID);
+//			return attackResult;
+//		}
 		var shipsAtLocation = ships.stream().filter(ship -> ship.isAtLocation(s)).collect(Collectors.toList());
 		if (shipsAtLocation.size() == 0) {
 			var attackResult = new Result(s);
