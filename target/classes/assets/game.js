@@ -208,7 +208,7 @@ function initGame() {
        registerCellListener(place(4));
     });
     document.getElementById("sonar_pulse").addEventListener("click", function(e) {
-        //registerCellListener();
+        registerCellListener(cellClick());
     });
     sendXhr("GET", "/game", {}, function(data) {
         game = data;

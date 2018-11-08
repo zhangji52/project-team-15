@@ -3,9 +3,12 @@ package controllers;
 import com.google.inject.Singleton;
 import cs361.battleships.models.Game;
 import cs361.battleships.models.Ship;
+import cs361.battleships.models.Board;
 import ninja.Context;
 import ninja.Result;
 import ninja.Results;
+
+import java.util.List;
 
 @Singleton
 public class ApplicationController {
@@ -39,4 +42,15 @@ public class ApplicationController {
             return Results.badRequest();
         }
     }
+
+//    public List<cs361.battleships.models.Result> sonarPulse(Context context, AttackGameAction g) {
+//        Game game = g.getGame();
+//        Board board = new Board();
+//        boolean result = board.sonarPulse(g.getActionRow(),g.getActionColumn());
+//        if (result) {
+//            return Results.json().render(game);
+//        } else {
+//            return Results.badRequest();
+//        }
+
 }
