@@ -3,7 +3,7 @@
 html {
     background-image: url("Pluto2.jpg");
     background-repeat: no-repeat;
-    background-position: center top;
+    background-position: center;
     background-color: black;
     background-attachment: fixed;
 }
@@ -27,6 +27,7 @@ h1 {
 .battleGrid tr {
     border: 1px solid white;
     height: 30px;
+
 }
 .battleGrid td {
     border: 1px solid white;
@@ -35,20 +36,20 @@ h1 {
 .dialogBox {
     text-align: justify;
     text-align-last: center;
+    text-decoration: black;
     resize: none;
     width: 200px;
     height: 250px;
     padding:5px;
     margin: 15px;
-
-
+    position:center;
 }
 td:hover {
-    background-color: silver;
+    background-color: Silver;
 }
 
 .placed {
-    background-color: silver;
+    background-color: Red;
 }
 
 .occupied {
@@ -67,11 +68,12 @@ td:hover {
     background-color: blue;
 }
 
-
 .invalid {
     background-color: rgba(156, 31, 0, 0.836) !important;
 }
-
+a{
+    font-family: "Lucida Console";
+}
 a.restartButton{
     display: block;
     text-align: center;
@@ -83,6 +85,74 @@ a.restartButton{
     font-weight: bold;
     margin-left: 70px;
     margin-right: 70px;
-
+    background-color: Red;
 }
 
+a.restartButton:hover{
+    background-color: Orange;
+}
+
+a.Menu{
+    display: block;
+    text-align: center;
+    -webkit-appearance: button;
+    appearance: button;
+    text-decoration: none;
+    color: initial;
+    text-color: white;
+    font-weight: bold;
+    margin-left: 60px;
+    margin-right: 60px;
+    background-color: red;
+}
+a.Instruction{
+    display: block;
+    text-align: center;
+    -webkit-appearance: button;
+    appearance: button;
+    text-decoration: none;
+    color: initial;
+    text-color: white;
+    font-weight: bold;
+    margin-left: 70px;
+    margin-right: 70px;
+    background-color: Red;
+}
+a.Instruction:hover{
+    background-color: Orange;
+}
+a.Exit{
+    display: block;
+    text-align: center;
+    -webkit-appearance: button;
+    appearance: button;
+    text-decoration: none;
+    color: initial;
+    text-color: white;
+    font-weight: bold;
+    margin-left: 70px;
+    margin-right: 70px;
+    background-color: Red;
+}
+a.Exit:hover{
+    background-color: blue;
+}
+
+#animate{
+    //position:relative;
+    position: center;
+}
+
+#animate img{
+    height:200px;
+    width:14%;
+    position: center;
+    -webkit-transition: opacity 1s ease-in-out;
+    -moz-transition: opacity 1s ease-in-out;
+    -o-transition: opacity 1s ease-in-out;
+    transition: opacity 1s ease-in-out;
+}
+
+#animate img.top:hover {
+    opacity:0;
+}
