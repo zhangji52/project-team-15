@@ -52,6 +52,7 @@ public class Board {
 	}
 
 	private Result attack(Square s) {
+		/* Commented out to allow multiple hits in the same location*/
 //		if (attacks.stream().anyMatch(r -> r.getLocation().equals(s))) {
 //			var attackResult = new Result(s);
 //			attackResult.setResult(AtackStatus.INVALID);
