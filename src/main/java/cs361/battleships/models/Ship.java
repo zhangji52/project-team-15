@@ -106,6 +106,8 @@ public class Ship {
 		if(attackedSquare.getColumn() == CaptainModule.getColumn() && attackedSquare.getRow() == CaptainModule.getRow()){
 			attackedSquare = CaptainModule;
 		}
+		
+		/* Commented out to allow multiple hits in the same location*/
 //		if (attackedSquare.isHit()) {
 //			var result = new Result(attackedLocation);
 //			result.setResult(AtackStatus.INVALID);
