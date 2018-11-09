@@ -259,6 +259,7 @@ function initGame() {
        else {
            sonarButton = 1;
                                     //after the right game rules met and sonar button is clicked this executes the sonar pulse at location of mouse click
+
            sonarCounter++;
            sonarButton = 0;
        }
