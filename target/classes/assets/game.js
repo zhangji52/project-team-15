@@ -41,8 +41,8 @@ function outputTextBox(input) {
             document.getElementById("textBox").value = "Already used all of your Sonar pulse ammo\n";
         case 6:
             document.getElementById("textBox").value = "You haven't sunk any ships yet!\n";
-        // case 7:
-        //     document.getElementById("textBox").value = "Choose your Sonar pulse location\n";
+        case 7:
+            document.getElementById("textBox").value = "Choose your Sonar pulse location\n";
 
     }
 
@@ -143,10 +143,11 @@ function cellClick() {
     else if(sonarUnlock == 1 && sonarChecked == true && sonarCounter < 2)
     {
         //outputTextBox(7);
-        sendXhr("POST", "/sonarPulse", {game: game, shipType: shipType, x: row, y: col, isVertical: vertical}, function(data) {   //connects to Routes.java which connects to game.sonarPulse
+        sendXhr("POST", "/sonarPulse", {game: game,x: row, y: col}, function(data) {   //connects to Routes.java which connects to game.sonarPulse
             game = data;
             redrawGrid();
             sonarCounter++;
+            console.log(sonarCounter);
         });
     }
 
