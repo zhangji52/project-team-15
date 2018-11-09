@@ -2,6 +2,8 @@ package cs361.battleships.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import freemarker.core.ReturnInstruction.Return;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -11,6 +13,7 @@ public class Board {
 
 	@JsonProperty private List<Ship> ships;
 	@JsonProperty private List<Result> attacks;
+	@JsonProperty private List<Result> sonarResults;
 
 	/*
 	DO NOT change the signature of this method. It is used by the grading scripts.
@@ -18,6 +21,7 @@ public class Board {
 	public Board() {
 		ships = new ArrayList<>();
 		attacks = new ArrayList<>();
+		sonarResults = new ArrayList<>();
 	}
 
 	/*
@@ -88,9 +92,12 @@ public class Board {
 		 */
 		for (int i = -2; i <= 2; i++) {
 			for (int j = (-2 + Math.abs(i)); j <= (2 - Math.abs(i)); j++){
-				pulseResults.add(sonarPulse(new Square(x + i, (char) (y + j))));
+				if ((x + i >= 1 && x + i <= 10) && ((char) (y + j) >= 'A') && (char) (y + j) <= 'J')
+					pulseResults.add(sonarPulse(new Square(x + i, (char) (y + j))));
 			} 
 		}
+
+		pulseResults.forEach((s) -> this.sonarResults.add(s));
 		
 		return pulseResults;
 	}
@@ -101,9 +108,11 @@ public class Board {
 			// Didn't find a ship, return a MISS
 			System.out.println("Returning miss result at: " + s.getColumn() + s.getRow());
 			var pulseResult = new Result(s);
+			pulseResult.setResult(AtackStatus.NOTFOUND);
 			return pulseResult;
 		} 
 		// Found a ship, return a FOUND
+		System.out.println("Returning found result at: " + s.getColumn() + s.getRow());
 		var pulseResult = new Result(s);
 		pulseResult.setResult(AtackStatus.FOUND);
 		return pulseResult;

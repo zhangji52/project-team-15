@@ -1,5 +1,6 @@
 package conf;
 
+import cs361.battleships.models.Board;
 import ninja.AssetsController;
 import ninja.Router;
 import ninja.application.ApplicationRoutes;
@@ -15,7 +16,7 @@ public class Routes implements ApplicationRoutes {
         router.GET().route("/game").with(ApplicationController::newGame);
         router.POST().route("/place").with(ApplicationController::placeShip);
         router.POST().route("/attack").with(ApplicationController::attack);
-
+        router.POST().route("/sonarPulse").with(ApplicationController::sonarPulse);
         ///////////////////////////////////////////////////////////////////////
         // Assets (pictures / javascript)
         ///////////////////////////////////////////////////////////////////////    

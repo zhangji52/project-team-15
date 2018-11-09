@@ -112,7 +112,7 @@ public class BoardTest {
         falseResults.add(new Square(5, 'E'));
         falseResults.add(new Square(5, 'F'));
         falseResults.add(new Square(6, 'E'));
-        falseResults.forEach((s) -> assertTrue(results.stream().anyMatch(r -> r.getLocation().equals(s) && r.getResult() == AtackStatus.MISS)));
+        falseResults.forEach((s) -> assertTrue(results.stream().anyMatch(r -> r.getLocation().equals(s) && r.getResult() == AtackStatus.NOTFOUND)));
     }
 
     @Test

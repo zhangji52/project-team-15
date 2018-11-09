@@ -3,8 +3,10 @@ var placedShips = 0;
 var game;
 var shipType;
 var vertical;
-
-
+var sonarChecked;
+var sonarUnlock = 0;
+var sonarCounter = 0;
+var sonarButton = 0;
 
 function makeGrid(table, isPlayer) {
     for (i=0; i<10; i++) {
@@ -35,6 +37,12 @@ function outputTextBox(input) {
         case 4:
             document.getElementById("textBox").value = "There is a fleet ahead! FIRE CANNONS!\n";
             break;
+        case 5:
+            document.getElementById("textBox").value = "Already used all of your Sonar pulse ammo\n";
+        case 6:
+            document.getElementById("textBox").value = "You haven't sunk any ships yet!\n";
+        case 7:
+            document.getElementById("textBox").value = "Choose your Sonar pulse location\n";
 
     }
 
@@ -49,18 +57,35 @@ function markHits(board, elementId, surrenderText) {
                 outputTextBox(0);
             }
         else if (attack.result === "HIT"){
-            className = "hit";
+            className = "hit"
             if(elementId === "opponent")
                 outputTextBox(1);
             }
         else if (attack.result === "SUNK"){
+
             className = "hit"
             if(elementId === "opponent")
+                sonarUnlock = 1;
                 outputTextBox(2);
+
             }
-        else if (attack.result === "SURRENDER")
+        else if (attack.result === "SURRENDER"){
+            document.getElementById("textBox").value = surrenderText.toString();
             alert(surrenderText);
+            }
         document.getElementById(elementId).rows[attack.location.row-1].cells[attack.location.column.charCodeAt(0) - 'A'.charCodeAt(0)].classList.add(className);
+    });
+}
+
+function markPulse(board, elementId) {
+    board.sonarResults.forEach((pulse) => {
+        let className;
+        if (pulse.result === "FOUND") {
+            className = "occupied"
+        } else if (pulse.result === "NOTFOUND") {
+            className = "notfound"
+        }
+        document.getElementById(elementId).rows[pulse.location.row-1].cells[pulse.location.column.charCodeAt(0) - 'A'.charCodeAt(0)].classList.add(className);
     });
 }
 
@@ -76,8 +101,9 @@ function redrawGrid() {
     game.playersBoard.ships.forEach((ship) => ship.occupiedSquares.forEach((square) => {
         document.getElementById("player").rows[square.row-1].cells[square.column.charCodeAt(0) - 'A'.charCodeAt(0)].classList.add("occupied");
     }));
-    markHits(game.opponentsBoard, "opponent", "You won the game");
-    markHits(game.playersBoard, "player", "You lost the game");
+    markHits(game.opponentsBoard, "opponent", "You won the game!\n");
+    markHits(game.playersBoard, "player", "You lost the game :(\n");
+    markPulse(game.opponentsBoard, "opponent")
 }
 
 var oldListener;
@@ -98,6 +124,11 @@ function registerCellListener(f) {
 function cellClick() {
     let row = this.parentNode.rowIndex + 1;
     let col = String.fromCharCode(this.cellIndex + 65);
+    if((sonarChecked = document.getElementById("sonar_pulse").checked;) == true)
+    {
+            outputTextBox(7);
+    }
+
     if (isSetup) {
         sendXhr("POST", "/place", {game: game, shipType: shipType, x: row, y: col, isVertical: vertical}, function(data) {
             game = data;
@@ -111,11 +142,25 @@ function cellClick() {
                 outputTextBox(3);
             }
         });
-    } else {
+    }
+
+    else if(sonarUnlock == 1 && sonarChecked == true && sonarCounter < 2)
+    {
+
+        sendXhr("POST", "/sonarPulse", {game: game,x: row, y: col}, function(data) {   //connects to Routes.java which connects to game.sonarPulse
+            game = data;
+            redrawGrid();
+            sonarCounter++;
+            console.log(sonarCounter);
+        });
+    }
+
+    else {
         sendXhr("POST", "/attack", {game: game, x: row, y: col}, function(data) {
             game = data;
             redrawGrid();
         })
+
     }
 }
 
@@ -123,7 +168,7 @@ function sendXhr(method, url, data, handler) {
     var req = new XMLHttpRequest();
     req.addEventListener("load", function(event) {
         if (req.status != 200) {
-            alert("Cannot complete the action");
+            document.getElementById("textBox").value ="Invalid action\n"
             return;
         }
         handler(JSON.parse(req.responseText));
@@ -134,9 +179,12 @@ function sendXhr(method, url, data, handler) {
 }
 
 function place(size) {
+
     return function() {
         let row = this.parentNode.rowIndex;
         let col = this.cellIndex;
+        let invalidPlacement = false;
+        
         vertical = document.getElementById("is_vertical").checked;
         let table = document.getElementById("player");
         for (let i=0; i<size; i++) {
@@ -145,6 +193,8 @@ function place(size) {
                 let tableRow = table.rows[row+i];
                 if (tableRow === undefined) {
                     // ship is over the edge; let the back end deal with it
+                    // we also need to turn them red though, so toggle this bool here
+                    invalidPlacement = true;
                     break;
                 }
                 cell = tableRow.cells[col];
@@ -153,12 +203,40 @@ function place(size) {
             }
             if (cell === undefined) {
                 // ship is over the edge; let the back end deal with it
+                // we also need to turn them red though, so toggle this bool here
+                invalidPlacement = true;
                 break;
+            }
+            if (cell.classList.contains("occupied")) {
+                // we need to turn them red, so toggle this bool here
+                invalidPlacement = true;
             }
             cell.classList.toggle("placed");
         }
+        if (invalidPlacement) {
+            for (let i = 0; i < size; i++) {
+                let cell;
+                if(vertical) {
+                    let tableRow = table.rows[row+i];
+                    if (tableRow === undefined) {
+                        // ship is over the edge; let the back end deal with it
+                        break;
+                    }
+                    cell = tableRow.cells[col];
+                } else {
+                    cell = table.rows[row].cells[col+i];
+                }
+                if (cell === undefined) {
+                    // ship is over the edge; let the back end deal with it
+                    break;
+                }
+                cell.classList.toggle("invalid");
+            }
+            
+        }
     }
 }
+
 
 
 
@@ -177,6 +255,23 @@ function initGame() {
         shipType = "BATTLESHIP";
        registerCellListener(place(4));
     });
+    // document.getElementById("sonar_pulse").addEventListener("click", function(e) {      //Initializes sonar button
+    //    if(sonarUnlock == 0)                                                             //Check to make sure player has sunk a ship before being able to use Sonar Pulse
+    //    {
+    //        outputTextBox(6);
+    //    }
+    //    else if(sonarCounter == 2)                                                       //If you have used 2 Sonar Pulses you have used up your inventory of them
+    //    {
+    //        outputTextBox(5);
+    //    }
+    //    else {
+    //        sonarButton = 1;
+    //                                 //after the right game rules met and sonar button is clicked this executes the sonar pulse at location of mouse click
+    //
+    //        sonarCounter++;
+    //        sonarButton = 0;
+    //    }
+    // });
     sendXhr("GET", "/game", {}, function(data) {
         game = data;
     });
