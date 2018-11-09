@@ -124,7 +124,11 @@ function registerCellListener(f) {
 function cellClick() {
     let row = this.parentNode.rowIndex + 1;
     let col = String.fromCharCode(this.cellIndex + 65);
-    sonarChecked = document.getElementById("sonar_pulse").checked;
+    if((sonarChecked = document.getElementById("sonar_pulse").checked;) == true)
+    {
+            outputTextBox(7);
+    }
+
     if (isSetup) {
         sendXhr("POST", "/place", {game: game, shipType: shipType, x: row, y: col, isVertical: vertical}, function(data) {
             game = data;
@@ -142,7 +146,7 @@ function cellClick() {
 
     else if(sonarUnlock == 1 && sonarChecked == true && sonarCounter < 2)
     {
-        //outputTextBox(7);
+
         sendXhr("POST", "/sonarPulse", {game: game,x: row, y: col}, function(data) {   //connects to Routes.java which connects to game.sonarPulse
             game = data;
             redrawGrid();
