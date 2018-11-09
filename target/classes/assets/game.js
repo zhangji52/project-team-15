@@ -76,6 +76,19 @@ function markHits(board, elementId, surrenderText) {
     });
 }
 
+function markPulse(board, elementId) {
+    board.sonarResults.forEach((pulse) => {
+        let className;
+        if (pulse.result === "FOUND") {
+            className = "occupied"
+        } else if (pulse.result === "NOTFOUND") {
+            className = "empty"
+        }
+
+        document.getElementById(elementId).rows[pulse.location.row-1].cells[pulse.location.column.charCodeAt(0) - 'A'.charCodeAt(0)].classList.add(className);
+    });
+}
+
 function redrawGrid() {
     Array.from(document.getElementById("opponent").childNodes).forEach((row) => row.remove());
     Array.from(document.getElementById("player").childNodes).forEach((row) => row.remove());
@@ -90,6 +103,7 @@ function redrawGrid() {
     }));
     markHits(game.opponentsBoard, "opponent", "You won the game!\n");
     markHits(game.playersBoard, "player", "You lost the game :(\n");
+    markPulse(game.opponentsBoard, "oppenent")
 }
 
 var oldListener;

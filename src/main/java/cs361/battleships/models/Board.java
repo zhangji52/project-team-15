@@ -13,7 +13,7 @@ public class Board {
 
 	@JsonProperty private List<Ship> ships;
 	@JsonProperty private List<Result> attacks;
-	@JsonProperty private List<Result> sonars;
+	@JsonProperty private List<Result> sonarResults;
 
 	/*
 	DO NOT change the signature of this method. It is used by the grading scripts.
@@ -21,6 +21,7 @@ public class Board {
 	public Board() {
 		ships = new ArrayList<>();
 		attacks = new ArrayList<>();
+		sonarResults = new ArrayList<>();
 	}
 
 	/*
@@ -95,7 +96,7 @@ public class Board {
 			} 
 		}
 
-		pulseResults.forEach((s) -> sonars.add(s));
+		pulseResults.forEach((s) -> this.sonarResults.add(s));
 		
 		return pulseResults;
 	}
@@ -106,6 +107,7 @@ public class Board {
 			// Didn't find a ship, return a MISS
 			System.out.println("Returning miss result at: " + s.getColumn() + s.getRow());
 			var pulseResult = new Result(s);
+			pulseResult.setResult(AtackStatus.NOTFOUND);
 			return pulseResult;
 		} 
 		// Found a ship, return a FOUND
