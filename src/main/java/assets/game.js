@@ -230,7 +230,7 @@ function initGame() {
        registerCellListener(place(4));
     });
     document.getElementById("sonar_pulse").addEventListener("click", function(e) {      //Initializes sonar button
-       if(sonarUnlock == 0)                                                              //Check to make sure player has sunk a ship before being able to use Sonar Pulse
+       if(sonarUnlock == 0)                                                             //Check to make sure player has sunk a ship before being able to use Sonar Pulse
        {
            outputTextBox(6);
        }
@@ -240,7 +240,7 @@ function initGame() {
        }
        else {
            sonarButton = 1;
-         registerCellListener(cellClick());                                       //after the right game rules met and sonar button is clicked this executes the sonar pulse at location of mouse click
+         registerCellListener(cellClick());                                             //after the right game rules met and sonar button is clicked this executes the sonar pulse at location of mouse click
            sonarCounter++;
            sonarButton = 0;
        }
