@@ -82,7 +82,7 @@ function markPulse(board, elementId) {
         if (pulse.result === "FOUND") {
             className = "occupied"
         } else if (pulse.result === "NOTFOUND") {
-            className = "empty"
+            className = "notfound"
         }
         document.getElementById(elementId).rows[pulse.location.row-1].cells[pulse.location.column.charCodeAt(0) - 'A'.charCodeAt(0)].classList.add(className);
     });
