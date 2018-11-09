@@ -92,7 +92,7 @@ public class Board {
 		 */
 		for (int i = -2; i <= 2; i++) {
 			for (int j = (-2 + Math.abs(i)); j <= (2 - Math.abs(i)); j++){
-				if ((x + i >= 0 && x + i <= 9) && ((char) (y + j) >= 'A') && (char) (y + j) <= 'J')
+				if ((x + i >= 1 && x + i <= 10) && ((char) (y + j) >= 'A') && (char) (y + j) <= 'J')
 					pulseResults.add(sonarPulse(new Square(x + i, (char) (y + j))));
 			} 
 		}
