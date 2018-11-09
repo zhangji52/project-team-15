@@ -147,6 +147,7 @@ function cellClick() {
             game = data;
             redrawGrid();
             sonarCounter++;
+            console.log(sonarCounter);
         });
     }
 
