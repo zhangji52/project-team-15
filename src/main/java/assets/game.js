@@ -84,7 +84,6 @@ function markPulse(board, elementId) {
         } else if (pulse.result === "NOTFOUND") {
             className = "empty"
         }
-
         document.getElementById(elementId).rows[pulse.location.row-1].cells[pulse.location.column.charCodeAt(0) - 'A'.charCodeAt(0)].classList.add(className);
     });
 }
@@ -103,7 +102,7 @@ function redrawGrid() {
     }));
     markHits(game.opponentsBoard, "opponent", "You won the game!\n");
     markHits(game.playersBoard, "player", "You lost the game :(\n");
-    markPulse(game.opponentsBoard, "oppenent")
+    markPulse(game.opponentsBoard, "opponent")
 }
 
 var oldListener;
@@ -138,14 +137,16 @@ function cellClick() {
             }
         });
     }
-    // else if(sonarUnlock == 1 && sonarButton == 1)   // if a ship has been sunk and the button has been hit this will execute sonarPulse on cell click
-    // {
-    //     outputTextBox(7);
-    //     sendXhr("POST", "/sonarPulse", {game: game, shipType: shipType, x: row, y: col, isVertical: vertical}, function(data) {   //connects to Routes.java which connects to game.sonarPulse
-    //         game = data;
-    //         redrawGrid();
-    //     })
-    // }
+
+    else if(sonarUnlock == 1 && sonarButton == 1)
+    {
+        //outputTextBox(7);
+        sendXhr("POST", "/sonarPulse", {game: game, shipType: shipType, x: row, y: col, isVertical: vertical}, function(data) {   //connects to Routes.java which connects to game.sonarPulse
+            game = data;
+            redrawGrid()
+        });
+    }
+
     else {
         sendXhr("POST", "/attack", {game: game, x: row, y: col}, function(data) {
             game = data;
@@ -228,6 +229,9 @@ function place(size) {
     }
 }
 
+
+
+
 function initGame() {
     makeGrid(document.getElementById("opponent"), false);
     makeGrid(document.getElementById("player"), true);
@@ -254,7 +258,7 @@ function initGame() {
        }
        else {
            sonarButton = 1;
-         registerCellListener(cellClick());                                             //after the right game rules met and sonar button is clicked this executes the sonar pulse at location of mouse click
+                                    //after the right game rules met and sonar button is clicked this executes the sonar pulse at location of mouse click
            sonarCounter++;
            sonarButton = 0;
        }
