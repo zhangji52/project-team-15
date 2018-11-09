@@ -43,14 +43,14 @@ public class ApplicationController {
         }
     }
 
-//    public List<cs361.battleships.models.Result> sonarPulse(Context context, AttackGameAction g) {
-//        Game game = g.getGame();
-//        Board board = new Board();
-//        boolean result = board.sonarPulse(g.getActionRow(),g.getActionColumn());
-//        if (result) {
-//            return Results.json().render(game);
-//        } else {
-//            return Results.badRequest();
-//        }
+    public Result sonarPulse(Context context, AttackGameAction g) {
+        Game game = g.getGame();
+        boolean result = game.sonarPulse(g.getActionRow(), g.getActionColumn());
+        if (result) {
+            return Results.json().render(game);
+        } else {
+            return Results.badRequest();
+        }
+    }
 
 }

@@ -3,6 +3,9 @@ var placedShips = 0;
 var game;
 var shipType;
 var vertical;
+var sonarUnlock = 0;
+var sonarCounter = 0;
+var sonarButton = 0;
 
 function makeGrid(table, isPlayer) {
     for (i=0; i<10; i++) {
@@ -33,6 +36,12 @@ function outputTextBox(input) {
         case 4:
             document.getElementById("textBox").value = "There is a fleet ahead! FIRE CANNONS!\n";
             break;
+        case 5:
+            document.getElementById("textBox").value = "Already used all of your Sonar pulse ammo\n";
+        case 6:
+            document.getElementById("textBox").value = "You haven't sunk any ships yet!\n";
+        // case 7:
+        //     document.getElementById("textBox").value = "Choose your Sonar pulse location\n";
 
     }
 
@@ -52,9 +61,12 @@ function markHits(board, elementId, surrenderText) {
                 outputTextBox(1);
             }
         else if (attack.result === "SUNK"){
+
             className = "hit"
             if(elementId === "opponent")
+                sonarUnlock = 1;
                 outputTextBox(2);
+
             }
         else if (attack.result === "SURRENDER"){
             document.getElementById("textBox").value = surrenderText.toString();
@@ -111,7 +123,16 @@ function cellClick() {
                 outputTextBox(3);
             }
         });
-    } else {
+    }
+    // else if(sonarUnlock == 1 && sonarButton == 1)   // if a ship has been sunk and the button has been hit this will execute sonarPulse on cell click
+    // {
+    //     outputTextBox(7);
+    //     sendXhr("POST", "/sonarPulse", {game: game, shipType: shipType, x: row, y: col, isVertical: vertical}, function(data) {   //connects to Routes.java which connects to game.sonarPulse
+    //         game = data;
+    //         redrawGrid();
+    //     })
+    // }
+    else {
         sendXhr("POST", "/attack", {game: game, x: row, y: col}, function(data) {
             game = data;
             redrawGrid();
@@ -135,6 +156,7 @@ function sendXhr(method, url, data, handler) {
 }
 
 function place(size) {
+
     return function() {
         let row = this.parentNode.rowIndex;
         let col = this.cellIndex;
@@ -207,8 +229,21 @@ function initGame() {
         shipType = "BATTLESHIP";
        registerCellListener(place(4));
     });
-    document.getElementById("sonar_pulse").addEventListener("click", function(e) {
-        registerCellListener(cellClick());
+    document.getElementById("sonar_pulse").addEventListener("click", function(e) {      //Initializes sonar button
+       if(sonarUnlock == 0)                                                              //Check to make sure player has sunk a ship before being able to use Sonar Pulse
+       {
+           outputTextBox(6);
+       }
+       else if(sonarCounter == 2)                                                       //If you have used 2 Sonar Pulses you have used up your inventory of them
+       {
+           outputTextBox(5);
+       }
+       else {
+           sonarButton = 1;
+         registerCellListener(cellClick());                                       //after the right game rules met and sonar button is clicked this executes the sonar pulse at location of mouse click
+           sonarCounter++;
+           sonarButton = 0;
+       }
     });
     sendXhr("GET", "/game", {}, function(data) {
         game = data;

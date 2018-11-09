@@ -49,6 +49,16 @@ public class Game {
 
         return true;
     }
+    // Sonar Pulse
+    public boolean sonarPulse(int x, char  y) {
+        List<Result> sonarP = opponentsBoard.sonarPulse(x,y);
+        if(sonarP.isEmpty() == true)
+        {
+            return false;
+        }
+
+        return true;
+    }
 
     private char randCol() {
         int random = new Random().nextInt(10);
