@@ -2,6 +2,8 @@ package cs361.battleships.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import freemarker.core.ReturnInstruction.Return;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -11,6 +13,7 @@ public class Board {
 
 	@JsonProperty private List<Ship> ships;
 	@JsonProperty private List<Result> attacks;
+	@JsonProperty private List<Result> sonars;
 
 	/*
 	DO NOT change the signature of this method. It is used by the grading scripts.
@@ -91,6 +94,8 @@ public class Board {
 				pulseResults.add(sonarPulse(new Square(x + i, (char) (y + j))));
 			} 
 		}
+
+		pulseResults.forEach((s) -> sonars.add(s));
 		
 		return pulseResults;
 	}
@@ -104,6 +109,7 @@ public class Board {
 			return pulseResult;
 		} 
 		// Found a ship, return a FOUND
+		System.out.println("Returning found result at: " + s.getColumn() + s.getRow());
 		var pulseResult = new Result(s);
 		pulseResult.setResult(AtackStatus.FOUND);
 		return pulseResult;
