@@ -40,6 +40,8 @@ function outputTextBox(input) {
         case 5:
             document.getElementById("textBox").value = "You are out of sonar pulses\n";
             break;
+        case 6:
+            document.getElementById("textBox").value = "AAGHHHHH Ye sunk me precious booty!\n \n Sonar pulse now active\n \n 2 charges available!\n";
     }
 
 }
@@ -61,9 +63,14 @@ function markHits(board, elementId, surrenderText) {
 
             className = "hit"
             if(elementId === "opponent")
-                sonarUnlock = 1;
-                outputTextBox(2);
-
+                sonarUnlock++;
+                if(sonarUnlock == 1)
+                {
+                    outputTextBox(6);
+                }
+                else {
+                    outputTextBox(2);
+                }
             }
         else if (attack.result === "SURRENDER"){
             document.getElementById("textBox").value = surrenderText.toString();
@@ -137,7 +144,7 @@ function cellClick() {
         });
     }
 
-    else if(sonarUnlock == 1 && sonarChecked == true && sonarCounter < 2)
+    else if(sonarUnlock >= 1 && sonarChecked == true && sonarCounter < 2)
     {
 
         sendXhr("POST", "/sonarPulse", {game: game,x: row, y: col}, function(data) {   //connects to Routes.java which connects to game.sonarPulse
