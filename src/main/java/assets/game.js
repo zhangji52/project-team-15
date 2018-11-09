@@ -62,7 +62,7 @@ function markHits(board, elementId, surrenderText) {
         else if (attack.result === "SUNK"){
 
             className = "hit"
-            if(elementId === "opponent")
+            if(elementId === "opponent"){
                 sonarUnlock++;
                 if(sonarUnlock == 1)
                 {
@@ -71,6 +71,7 @@ function markHits(board, elementId, surrenderText) {
                 else {
                     outputTextBox(2);
                 }
+            }
             }
         else if (attack.result === "SURRENDER"){
             document.getElementById("textBox").value = surrenderText.toString();
