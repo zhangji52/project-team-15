@@ -143,7 +143,7 @@ function cellClick() {
     else if(sonarUnlock == 1 && sonarChecked == true && sonarCounter < 2)
     {
         //outputTextBox(7);
-        sendXhr("POST", "/sonarPulse", {game: game, shipType: shipType, x: row, y: col, isVertical: vertical}, function(data) {   //connects to Routes.java which connects to game.sonarPulse
+        sendXhr("POST", "/sonarPulse", {game: game,x: row, y: col}, function(data) {   //connects to Routes.java which connects to game.sonarPulse
             game = data;
             redrawGrid();
             sonarCounter++;
