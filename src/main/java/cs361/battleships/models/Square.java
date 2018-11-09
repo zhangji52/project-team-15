@@ -18,15 +18,6 @@ public class Square {
 		this.column = column;
 	}
 
-	public char getColumn() {
-		return column;
-	}
-
-	public int getRow() {
-		return row;
-	}
-
-
 	@Override
 	public boolean equals(Object other) {
 		if (other instanceof Square) {
@@ -49,12 +40,41 @@ public class Square {
 		return hit;
 	}
 
-	public void hit() {
-		hit = true;
-	}
+	public void hit() { hit = true; }
 
 	@Override
 	public String toString() {
 		return "(" + row + ", " + column + ')';
+	}
+
+	//Setters and Getters for values
+	@JsonIgnore
+	public void setColumn(char colChange){
+		column = colChange;
+	}
+
+	@JsonIgnore
+	public char getColumn() {
+		return column;
+	}
+
+	@JsonIgnore
+	public void setRow(int rowChange) {
+		row = rowChange;
+	}
+
+	@JsonIgnore
+	public int getRow() {
+		return row;
+	}
+
+	@JsonIgnore
+	void setHit(boolean in){
+		hit = in;
+	}
+
+	@JsonIgnore
+	boolean getHit(){
+		return hit;
 	}
 }
