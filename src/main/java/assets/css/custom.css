@@ -111,6 +111,10 @@ td:hover {
     background-color: Red;
 }
 
+.notfound {
+    background-color: silver;
+}
+
 .occupied {
     background-color: white;
 }

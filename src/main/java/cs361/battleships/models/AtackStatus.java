@@ -33,4 +33,9 @@ public enum AtackStatus {
 	 */
 	FOUND,
 
+	/**
+	 * The result if a ship was not found, and no action was taken
+	 */
+	NOTFOUND,
+
 }
