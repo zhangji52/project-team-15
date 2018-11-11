@@ -106,13 +106,11 @@ public class Board {
 		var shipsAtLocation = ships.stream().filter(ship -> ship.isAtLocation(s)).collect(Collectors.toList());
 		if (shipsAtLocation.size() == 0) {
 			// Didn't find a ship, return a MISS
-			System.out.println("Returning miss result at: " + s.getColumn() + s.getRow());
 			var pulseResult = new Result(s);
 			pulseResult.setResult(AtackStatus.NOTFOUND);
 			return pulseResult;
 		} 
 		// Found a ship, return a FOUND
-		System.out.println("Returning found result at: " + s.getColumn() + s.getRow());
 		var pulseResult = new Result(s);
 		pulseResult.setResult(AtackStatus.FOUND);
 		return pulseResult;
