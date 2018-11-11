@@ -3,7 +3,7 @@
 html {
     background-image: url("Pluto2.jpg");
     background-repeat: no-repeat;
-    background-position: center top;
+    background-position: center;
     background-color: black;
     background-attachment: fixed;
 }
@@ -13,11 +13,70 @@ h1 {
 }
 
 .row {
-  position: static;
-  white-space: nowrap;
-  text-align: center;
+    position: static;
+    white-space: nowrap;
+    text-align: center;
+}
+button1{
+    text-align: center;
+    border: 5px;
+    color: White;
+    position: fixed;
+    top: 85px;
+    left: 125px;
+ }
+
+button2{
+    text-align: center;
+    color: White;
+    position: fixed;
+    top: 85px;
+    left: 425px;
+}
+button3{
+    text-align: center;
+    color: White;
+    position: fixed;
+    top: 85px;
+    left: 695px;
 }
 
+button4{
+    text-align: center;
+    color: White;
+    position: fixed;
+    top: 85px;
+    left: 1185px;
+}
+button5{
+    text-align: center;
+    color: White;
+    position: fixed;
+    top: 85px;
+    left: 1485px;
+}
+button6{
+    text-align: center;
+    color: White;
+    position: fixed;
+    top: 85px;
+    left: 1760px;
+}
+
+
+button1:hover{
+    background-image:url("fire.png");
+    background-color: black;
+}
+
+button2:hover{
+    background-image:url("fire.png");
+    background-color: black;
+}
+button3:hover{
+    background-image:url("fire.png");
+    background-color: black;
+}
 
 .battleGrid {
     border: 1px solid white;
@@ -27,6 +86,7 @@ h1 {
 .battleGrid tr {
     border: 1px solid white;
     height: 30px;
+
 }
 .battleGrid td {
     border: 1px solid white;
@@ -35,20 +95,20 @@ h1 {
 .dialogBox {
     text-align: justify;
     text-align-last: center;
+    text-decoration: black;
     resize: none;
     width: 200px;
     height: 250px;
     padding:5px;
     margin: 15px;
-
-
+    position:center;
 }
 td:hover {
-    background-color: silver;
+    background-color: Silver;
 }
 
 .placed {
-    background-color: silver;
+    background-color: Red;
 }
 
 .notfound {
@@ -71,11 +131,12 @@ td:hover {
     background-color: blue;
 }
 
-
 .invalid {
     background-color: rgba(156, 31, 0, 0.836) !important;
 }
-
+a{
+    font-family: "Lucida Console";
+}
 a.restartButton{
     display: block;
     text-align: center;
@@ -85,8 +146,75 @@ a.restartButton{
     color: initial;
     text-color: white;
     font-weight: bold;
+    margin-top: 2px;
     margin-left: 70px;
     margin-right: 70px;
-
+    background-color: Red;
 }
 
+a.restartButton:hover{
+    background-color: Orange;
+}
+
+a.Menu{
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    color: initial;
+    text-color: white;
+    font-weight: bold;
+    margin-left: 60px;
+    margin-right: 60px;
+}
+a.Instruction{
+    display: block;
+    text-align: center;
+    -webkit-appearance: button;
+    appearance: button;
+    text-decoration: none;
+    color: initial;
+    text-color: white;
+    font-weight: bold;
+    margin-top: 2px;
+    margin-left: 70px;
+    margin-right: 70px;
+    background-color: Red;
+}
+a.Instruction:hover{
+    background-color: Orange;
+}
+a.Exit{
+    display: block;
+    text-align: center;
+    -webkit-appearance: button;
+    appearance: button;
+    text-decoration: none;
+    color: initial;
+    text-color: white;
+    font-weight: bold;
+    margin-top: 2px;
+    margin-left: 70px;
+    margin-right: 70px;
+    background-color: Red;
+}
+a.Exit:hover{
+    background-color: blue;
+}
+
+#animate{
+    position: center;
+}
+
+#animate img{
+    height:200px;
+    width:14%;
+    position: center;
+    -webkit-transition: opacity 1s ease-in-out;
+    -moz-transition: opacity 1s ease-in-out;
+    -o-transition: opacity 1s ease-in-out;
+    transition: opacity 1s ease-in-out;
+}
+
+#animate img.top:hover{
+    opacity:0;
+}
