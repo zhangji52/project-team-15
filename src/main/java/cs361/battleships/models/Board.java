@@ -33,7 +33,8 @@ public class Board {
 		if (ships.stream().anyMatch(s -> s.getKind().equals(ship.getKind()))) {
 			return false;
 		}
-
+		final var placedShip = new Ship(ship.getKind());
+		
 		var placedShipT = new Ship();
 		switch (ship.getKind()){
 			case "MINESWEEPER": placedShipT = new Ship_Minesweeper();
