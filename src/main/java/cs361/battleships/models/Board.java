@@ -1,8 +1,6 @@
 package cs361.battleships.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import freemarker.core.ReturnInstruction.Return;
 
 import java.util.ArrayList;
