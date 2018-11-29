@@ -80,20 +80,6 @@ button4:hover{
     background-color: black;
 }
 
-button1:hover{
-    background-image:url("fire.png");
-    background-color: black;
-}
-
-button2:hover{
-    background-image:url("fire.png");
-    background-color: black;
-}
-button3:hover{
-    background-image:url("fire.png");
-    background-color: black;
-}
-
 .battleGrid {
     border: 1px solid white;
     border-spacing: 0px;
