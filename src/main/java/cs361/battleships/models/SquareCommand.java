@@ -37,7 +37,9 @@ public class SquareCommand extends Square{
     }
 
 
-    public int getNumHits(){ return numHits; }
+
+    public int getnumHits(){ return numHits; }
+
 
     public int getarmorPoints(){ return armorPoints; }
 }

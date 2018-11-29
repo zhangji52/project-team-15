@@ -167,9 +167,11 @@ public class ShipTest {
 
     @Test
     public void testSinkCommand() {
-        Ship Minesweeper = new Ship_Minesweeper ();
-        Ship Destroyer = new Ship_Destroyer();
-        Ship BattleShip = new Ship_Battleship();
+        Ship Minesweeper = new Ship ("MINESWEEPER");
+        Ship Destroyer = new Ship("DESTROYER");
+        Ship BattleShip = new Ship("BATTLESHIP");
+        Ship Submarine = new ship("SUBMARINE");
+
 
         Minesweeper.place('A',1, true);
         Destroyer.place('B',1, true);
