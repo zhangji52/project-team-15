@@ -1,5 +1,5 @@
 var isSetup = true;
-var placedShips = -1;
+var placedShips = 0;
 var game;
 var shipType;
 var vertical;
@@ -135,7 +135,7 @@ function cellClick() {
             game = data;
             redrawGrid();
             placedShips++;
-            if (placedShips == 3) {
+            if (placedShips == 4) {
                 outputTextBox(4);
                 isSetup = false;
                 registerCellListener((e) => {});
