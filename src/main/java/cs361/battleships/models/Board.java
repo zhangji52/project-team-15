@@ -2,6 +2,10 @@ package cs361.battleships.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import freemarker.core.ReturnInstruction.Return;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -11,6 +15,7 @@ public class Board {
 
 	@JsonProperty private List<Ship> ships;
 	@JsonProperty private List<Result> attacks;
+	@JsonProperty private List<Result> sonarResults;
 
 	/*
 	DO NOT change the signature of this method. It is used by the grading scripts.
@@ -18,19 +23,34 @@ public class Board {
 	public Board() {
 		ships = new ArrayList<>();
 		attacks = new ArrayList<>();
+		sonarResults = new ArrayList<>();
 	}
 
 	/*
 	DO NOT change the signature of this method. It is used by the grading scripts.
 	 */
 	public boolean placeShip(Ship ship, int x, char y, boolean isVertical) {
-		if (ships.size() >= 3) {
+		if (ships.size() >= 4) {
 			return false;
 		}
 		if (ships.stream().anyMatch(s -> s.getKind().equals(ship.getKind()))) {
 			return false;
 		}
-		final var placedShip = new Ship(ship.getKind());
+
+		var placedShipT = new Ship();
+		switch (ship.getKind()){
+			case "MINESWEEPER": placedShipT = new Ship_Minesweeper();
+				break;
+			case "DESTROYER": placedShipT = new Ship_Destroyer();
+				break;
+			case "BATTLESHIP": placedShipT = new Ship_Battleship();
+				break;
+			case "SUBMARINE": placedShipT = new Ship_Submarine();
+				break;
+		}
+
+		final var placedShip = placedShipT;
+		//final var placedShip = new Ship(ship.getKind());
 		placedShip.place(y, x, isVertical);
 		if (ships.stream().anyMatch(s -> s.overlaps(placedShip))) {
 			return false;
@@ -52,11 +72,11 @@ public class Board {
 	}
 
 	private Result attack(Square s) {
-		if (attacks.stream().anyMatch(r -> r.getLocation().equals(s))) {
-			var attackResult = new Result(s);
-			attackResult.setResult(AtackStatus.INVALID);
-			return attackResult;
-		}
+//		if (attacks.stream().anyMatch(r -> r.getLocation().equals(s))) {
+//			var attackResult = new Result(s);
+//			attackResult.setResult(AtackStatus.INVALID);
+//			return attackResult;
+//		}
 		var shipsAtLocation = ships.stream().filter(ship -> ship.isAtLocation(s)).collect(Collectors.toList());
 		if (shipsAtLocation.size() == 0) {
 			var attackResult = new Result(s);
@@ -88,9 +108,12 @@ public class Board {
 		 */
 		for (int i = -2; i <= 2; i++) {
 			for (int j = (-2 + Math.abs(i)); j <= (2 - Math.abs(i)); j++){
-				pulseResults.add(sonarPulse(new Square(x + i, (char) (y + j))));
+				if ((x + i >= 1 && x + i <= 10) && ((char) (y + j) >= 'A') && (char) (y + j) <= 'J')
+					pulseResults.add(sonarPulse(new Square(x + i, (char) (y + j))));
 			} 
 		}
+
+		pulseResults.forEach((s) -> this.sonarResults.add(s));
 		
 		return pulseResults;
 	}
@@ -99,8 +122,8 @@ public class Board {
 		var shipsAtLocation = ships.stream().filter(ship -> ship.isAtLocation(s)).collect(Collectors.toList());
 		if (shipsAtLocation.size() == 0) {
 			// Didn't find a ship, return a MISS
-			System.out.println("Returning miss result at: " + s.getColumn() + s.getRow());
 			var pulseResult = new Result(s);
+			pulseResult.setResult(AtackStatus.NOTFOUND);
 			return pulseResult;
 		} 
 		// Found a ship, return a FOUND

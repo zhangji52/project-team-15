@@ -2,19 +2,24 @@ package cs361.battleships.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.google.common.collect.Sets;
 import com.mchange.v1.util.CollectionUtils;
+import jdk.jshell.Snippet;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+@JsonTypeInfo(use=JsonTypeInfo.Id.CLASS, property="@class")
 
 public class Ship {
+
 
 	@JsonProperty private String kind;
 	@JsonProperty private List<Square> occupiedSquares;
 	@JsonProperty private int size;
+
 
 	public Ship() {
 		occupiedSquares = new ArrayList<>();
@@ -33,6 +38,9 @@ public class Ship {
 			case "BATTLESHIP":
 				size = 4;
 				break;
+			case "SUBMARINE":
+				size = 5;
+				break;
 		}
 	}
 
@@ -41,7 +49,7 @@ public class Ship {
 	}
 
 	public void place(char col, int row, boolean isVertical) {
-		for (int i=0; i<size; i++) {
+		for (int i=0; i< size; i++) {
 			if (isVertical) {
 				occupiedSquares.add(new Square(row+i, col));
 			} else {
@@ -72,26 +80,41 @@ public class Ship {
 			return new Result(attackedLocation);
 		}
 		var attackedSquare = square.get();
+
 		if (attackedSquare.isHit()) {
 			var result = new Result(attackedLocation);
 			result.setResult(AtackStatus.INVALID);
 			return result;
 		}
+
 		attackedSquare.hit();
 		var result = new Result(attackedLocation);
 		result.setShip(this);
 		if (isSunk()) {
 			result.setResult(AtackStatus.SUNK);
+		} else if (attackedSquare.getHit() == false) {
+			result.setResult(AtackStatus.MISS);
 		} else {
 			result.setResult(AtackStatus.HIT);
 		}
 		return result;
 	}
 
+
 	@JsonIgnore
 	public boolean isSunk() {
-		return getOccupiedSquares().stream().allMatch(s -> s.isHit());
+		int hit_check = 0;
+		for (int i = 0; i < size; i++) {
+			if(this.occupiedSquares.get(i).getHit()){
+				hit_check += 1;
+			}
+		}
+		if(hit_check == size){
+			return true;
+		}
+		return false;
 	}
+
 
 	@Override
 	public boolean equals(Object other) {
@@ -114,4 +137,22 @@ public class Ship {
 	public String toString() {
 		return kind + occupiedSquares.toString();
 	}
+
+	@JsonIgnore
+	public void setKind(String kindToset){
+		kind = kindToset;
+	}
+	@JsonIgnore
+	protected void setOccupiedSquares(List<Square> SquaresToTake){
+		occupiedSquares = SquaresToTake;
+	}
+	@JsonIgnore
+	protected void setSize(int sizeToset){
+		size = sizeToset;
+	}
+	@JsonIgnore
+	protected int getSize(){
+		return size;
+	}
+
 }

@@ -42,26 +42,27 @@ public class BoardTest {
         board.placeShip(minesweeper, 1, 'A', true);
         minesweeper = board.getShips().get(0);
         Result result = board.attack(1, 'A');
-        assertEquals(AtackStatus.HIT, result.getResult());
+        assertEquals(AtackStatus.SURRENDER, result.getResult());
         assertEquals(minesweeper, result.getShip());
     }
+      /* the captains quarters allows for squares to be hit twice, invalid test*/
+//    @Test
+//    public void testAttackSameSquareMultipleTimes() {
+//        Ship minesweeper = new Ship("MINESWEEPER");
+//        board.placeShip(minesweeper, 1, 'A', true);
+//        board.attack(1, 'A');
+//        Result result = board.attack(1, 'A');
+//        assertEquals(AtackStatus.INVALID, result.getResult());
+//    }
 
-    @Test
-    public void testAttackSameSquareMultipleTimes() {
-        Ship minesweeper = new Ship("MINESWEEPER");
-        board.placeShip(minesweeper, 1, 'A', true);
-        board.attack(1, 'A');
-        Result result = board.attack(1, 'A');
-        assertEquals(AtackStatus.INVALID, result.getResult());
-    }
-
-    @Test
-    public void testAttackSameEmptySquareMultipleTimes() {
-        Result initialResult = board.attack(1, 'A');
-        assertEquals(AtackStatus.MISS, initialResult.getResult());
-        Result result = board.attack(1, 'A');
-        assertEquals(AtackStatus.INVALID, result.getResult());
-    }
+      /* the captains quarters allows for squares to be hit twice, invalid test*/
+//    @Test
+//    public void testAttackSameEmptySquareMultipleTimes() {
+//        Result initialResult = board.attack(1, 'A');
+//        assertEquals(AtackStatus.MISS, initialResult.getResult());
+//        Result result = board.attack(1, 'A');
+//        assertEquals(AtackStatus.INVALID, result.getResult());
+//    }
 
     @Test
     public void testSurrender() {
@@ -111,6 +112,26 @@ public class BoardTest {
         falseResults.add(new Square(5, 'E'));
         falseResults.add(new Square(5, 'F'));
         falseResults.add(new Square(6, 'E'));
-        falseResults.forEach((s) -> assertTrue(results.stream().anyMatch(r -> r.getLocation().equals(s) && r.getResult() == AtackStatus.MISS)));
+        falseResults.forEach((s) -> assertTrue(results.stream().anyMatch(r -> r.getLocation().equals(s) && r.getResult() == AtackStatus.NOTFOUND)));
+    }
+
+    @Test
+    public void testCaptainsQuartersSurrender() {
+        board.placeShip(new Ship("MINESWEEPER"), 1, 'A', true);
+        board.placeShip(new Ship("BATTLESHIP"), 1, 'C', true);
+        board.placeShip(new Ship("DESTROYER"), 1, 'B', true);
+
+        var result = board.attack(1,'A');
+        assertEquals(result.getResult(), AtackStatus.SUNK);
+
+        result = board.attack(2,'B');
+        assertEquals(result.getResult(), AtackStatus.MISS);
+        result = board.attack(2,'B');
+        assertEquals(result.getResult(), AtackStatus.SUNK);
+
+        result = board.attack(3,'C');
+        assertEquals(result.getResult(), AtackStatus.MISS);
+        result = board.attack(3,'C');
+        assertEquals(result.getResult(), AtackStatus.SURRENDER);
     }
 }

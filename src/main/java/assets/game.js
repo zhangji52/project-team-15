@@ -1,8 +1,12 @@
 var isSetup = true;
-var placedShips = 0;
+var placedShips = -1;
 var game;
 var shipType;
 var vertical;
+var sonarChecked;
+var sonarUnlock = 0;
+var sonarCounter = 0;
+var sonarButton = 0;
 
 function makeGrid(table, isPlayer) {
     for (i=0; i<10; i++) {
@@ -33,7 +37,11 @@ function outputTextBox(input) {
         case 4:
             document.getElementById("textBox").value = "There is a fleet ahead! FIRE CANNONS!\n";
             break;
-
+        case 5:
+            document.getElementById("textBox").value = "You are out of sonar pulses\n";
+            break;
+        case 6:
+            document.getElementById("textBox").value = "AAGHHHHH Ye sunk me precious booty!\n \n Sonar pulse now active\n \n 2 charges available!\n";
     }
 
 }
@@ -52,15 +60,36 @@ function markHits(board, elementId, surrenderText) {
                 outputTextBox(1);
             }
         else if (attack.result === "SUNK"){
+
             className = "hit"
-            if(elementId === "opponent")
-                outputTextBox(2);
+            if(elementId === "opponent"){
+                sonarUnlock++;
+                if(sonarUnlock == 1)
+                {
+                    outputTextBox(6);
+                }
+                else {
+                    outputTextBox(2);
+                }
+            }
             }
         else if (attack.result === "SURRENDER"){
             document.getElementById("textBox").value = surrenderText.toString();
             alert(surrenderText);
             }
         document.getElementById(elementId).rows[attack.location.row-1].cells[attack.location.column.charCodeAt(0) - 'A'.charCodeAt(0)].classList.add(className);
+    });
+}
+
+function markPulse(board, elementId) {
+    board.sonarResults.forEach((pulse) => {
+        let className;
+        if (pulse.result === "FOUND") {
+            className = "occupied"
+        } else if (pulse.result === "NOTFOUND") {
+            className = "notfound"
+        }
+        document.getElementById(elementId).rows[pulse.location.row-1].cells[pulse.location.column.charCodeAt(0) - 'A'.charCodeAt(0)].classList.add(className);
     });
 }
 
@@ -78,6 +107,7 @@ function redrawGrid() {
     }));
     markHits(game.opponentsBoard, "opponent", "You won the game!\n");
     markHits(game.playersBoard, "player", "You lost the game :(\n");
+    markPulse(game.opponentsBoard, "opponent")
 }
 
 var oldListener;
@@ -98,6 +128,8 @@ function registerCellListener(f) {
 function cellClick() {
     let row = this.parentNode.rowIndex + 1;
     let col = String.fromCharCode(this.cellIndex + 65);
+    sonarChecked = document.getElementById("sonar_pulse").checked;
+
     if (isSetup) {
         sendXhr("POST", "/place", {game: game, shipType: shipType, x: row, y: col, isVertical: vertical}, function(data) {
             game = data;
@@ -111,7 +143,24 @@ function cellClick() {
                 outputTextBox(3);
             }
         });
-    } else {
+    }
+
+    else if(sonarUnlock >= 1 && sonarChecked == true && sonarCounter < 2)
+    {
+
+        sendXhr("POST", "/sonarPulse", {game: game,x: row, y: col}, function(data) {   //connects to Routes.java which connects to game.sonarPulse
+            game = data;
+            redrawGrid();
+            sonarCounter++;
+            console.log(sonarCounter);
+            if(sonarCounter == 2)
+            {
+                outputTextBox(5);
+            }
+        });
+    }
+
+    else {
         sendXhr("POST", "/attack", {game: game, x: row, y: col}, function(data) {
             game = data;
             redrawGrid();
@@ -135,6 +184,7 @@ function sendXhr(method, url, data, handler) {
 }
 
 function place(size) {
+
     return function() {
         let row = this.parentNode.rowIndex;
         let col = this.cellIndex;
@@ -191,7 +241,6 @@ function place(size) {
         }
     }
 }
-
 function initGame() {
     makeGrid(document.getElementById("opponent"), false);
     makeGrid(document.getElementById("player"), true);
@@ -206,6 +255,10 @@ function initGame() {
     document.getElementById("place_battleship").addEventListener("click", function(e) {
         shipType = "BATTLESHIP";
        registerCellListener(place(4));
+    });
+    document.getElementById("place_submarine").addEventListener("click", function(e){
+        shipType = "SUBMARINE";
+        registerCellListener(place(4));
     });
     sendXhr("GET", "/game", {}, function(data) {
         game = data;
