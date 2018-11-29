@@ -19,6 +19,7 @@ public class Ship {
 	@JsonProperty private String kind;
 	@JsonProperty private List<Square> occupiedSquares;
 	@JsonProperty private int size;
+	@JsonProperty private SquareCommand CaptainModule;
 
 
 	public Ship() {
@@ -49,11 +50,42 @@ public class Ship {
 	}
 
 	public void place(char col, int row, boolean isVertical) {
-		for (int i=0; i< size; i++) {
+
+		int CommandLocation = -1;
+		int ArmourPoints = 0;
+		switch(kind) {
+			case "MINESWEEPER":
+				CommandLocation = 0;
+				break;
+			case "DESTROYER":
+				CommandLocation = 1;
+				break;
+			case "BATTLESHIP":
+				CommandLocation = 2;
+				break;
+		}
+
+		if(size >= 3){
+			ArmourPoints = 2;
+		} else {
+			ArmourPoints = 1;
+		}
+
+		for (int i=0; i<size; i++) {
 			if (isVertical) {
-				occupiedSquares.add(new Square(row+i, col));
+				if(i == CommandLocation){
+					CaptainModule = new SquareCommand(row + i, col, ArmourPoints);
+					occupiedSquares.add(new Square(row + i, col));
+				} else {
+					occupiedSquares.add(new Square(row + i, col));
+				}
 			} else {
-				occupiedSquares.add(new Square(row, (char) (col + i)));
+				if(i == CommandLocation){
+					CaptainModule = new SquareCommand(row, (char) (col + i), ArmourPoints);
+					occupiedSquares.add(new Square(row, (char) (col + i)));
+				} else {
+					occupiedSquares.add(new Square(row, (char) (col + i)));
+				}
 			}
 		}
 	}
@@ -81,11 +113,14 @@ public class Ship {
 		}
 		var attackedSquare = square.get();
 
-		if (attackedSquare.isHit()) {
-			var result = new Result(attackedLocation);
-			result.setResult(AtackStatus.INVALID);
-			return result;
+		if(attackedSquare.getColumn() == CaptainModule.getColumn() && attackedSquare.getRow() == CaptainModule.getRow()){
+			attackedSquare = CaptainModule;
 		}
+//		if (attackedSquare.isHit()) {
+//			var result = new Result(attackedLocation);
+//			result.setResult(AtackStatus.INVALID);
+//			return result;
+//		}
 
 		attackedSquare.hit();
 		var result = new Result(attackedLocation);
@@ -109,10 +144,13 @@ public class Ship {
 				hit_check += 1;
 			}
 		}
-		if(hit_check == size){
+
+		if(hit_check == size || CaptainModule.getHit()){
 			return true;
 		}
 		return false;
+		//return getOccupiedSquares().stream().allMatch(s -> s.isHit());
+
 	}
 
 
@@ -154,5 +192,7 @@ public class Ship {
 	protected int getSize(){
 		return size;
 	}
+
+	public SquareCommand getCaptainModule() {return CaptainModule; }
 
 }

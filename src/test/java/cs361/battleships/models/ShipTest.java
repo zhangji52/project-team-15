@@ -167,13 +167,15 @@ public class ShipTest {
 
     @Test
     public void testSinkCommand() {
-        Ship Minesweeper = new Ship_Minesweeper ();
-        Ship Destroyer = new Ship_Destroyer();
-        Ship BattleShip = new Ship_Battleship();
-
+        Ship Minesweeper = new Ship ("MINESWEEPER");
+        Ship Destroyer = new Ship("DESTROYER");
+        Ship BattleShip = new Ship("BATTLESHIP");
+        //Ship Submarine = new Ship("SUBMARINE");
+         
         Minesweeper.place('A',1, true);
         Destroyer.place('B',1, true);
         BattleShip.place('C',1, true);
+        //Submarine.place('D',1,true);
 
         var result = Minesweeper.attack(1, 'A');
         assertEquals(result.getResult(), AtackStatus.SUNK);

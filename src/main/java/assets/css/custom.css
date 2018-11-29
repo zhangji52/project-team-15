@@ -61,8 +61,6 @@ button6{
     position: fixed;
     top: 85px;
     left: 1760px;
-}
-
 
 button1:hover{
     background-image:url("fire.png");
@@ -78,6 +76,20 @@ button3:hover{
     background-color: black;
 }
 button4:hover{
+    background-image:url("fire.png");
+    background-color: black;
+}
+
+button1:hover{
+    background-image:url("fire.png");
+    background-color: black;
+}
+
+button2:hover{
+    background-image:url("fire.png");
+    background-color: black;
+}
+button3:hover{
     background-image:url("fire.png");
     background-color: black;
 }
