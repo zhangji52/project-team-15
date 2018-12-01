@@ -40,9 +40,18 @@ public class SquareTest {
     }
 
     @Test
+    public void testEqualsDefault() {
+        Square square1 = new SquareCommand();
+        Square square2 = new SquareCommand();
+
+        assertTrue(square1.equals(square2));
+        assertEquals(square1.hashCode(), square2.hashCode());
+    }
+
+    @Test
     public void testNotEquals() {
-        Square square1 = new Square(1, 'A');
-        Square square2 = new Square(2, 'A');
+        Square square1 = new SquareCommand(1, 'A');
+        Square square2 = new SquareCommand(2, 'A');
 
         assertFalse(square1.equals(square2));
         assertNotEquals(square1.hashCode(), square2.hashCode());

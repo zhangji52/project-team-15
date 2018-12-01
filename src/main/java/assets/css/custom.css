@@ -62,7 +62,42 @@ button6{
     top: 85px;
     left: 1760px;
 }
-
+buttonN{
+    text-align: center;
+    color: White;
+    border: inset;
+    background-color: black;
+    position: fixed;
+    top: 485px;
+    left: 425px;
+}
+buttonS{
+    text-align: center;
+    color: White;
+    border: inset;
+    background-color: black;
+    position: fixed;
+    top: 570px;
+    left: 425px;
+}
+buttonW{
+    text-align: center;
+    color: White;
+    border: inset;
+    background-color: black;
+    position: fixed;
+    top: 525px;
+    left: 355px;
+}
+buttonE{
+    text-align: center;
+    color: White;
+    border: inset;
+    background-color: black;
+    position: fixed;
+    top: 525px;
+    left: 500px;
+}
 
 button1:hover{
     background-image:url("fire.png");
@@ -81,6 +116,19 @@ button4:hover{
     background-image:url("fire.png");
     background-color: black;
 }
+buttonN:hover{
+    background-color: red;
+}
+buttonS:hover{
+    background-color: red;
+}
+buttonE:hover{
+    background-color: red;
+}
+buttonW:hover{
+    background-color: red;
+}
+
 
 .battleGrid {
     border: 1px solid white;

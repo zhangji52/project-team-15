@@ -32,7 +32,7 @@ public class Ship_MinesweeperTest {
 
     @Test
     public void testSinkCommand() {
-        Ship Minesweeper = new Ship_Minesweeper();
+        Ship_Minesweeper Minesweeper = new Ship_Minesweeper();
         Minesweeper.place('A', 1, true);
 
         var result = Minesweeper.attack(1, 'A');
@@ -41,7 +41,7 @@ public class Ship_MinesweeperTest {
 
     @Test
     public void testHitSinkCommand() {
-        Ship Minesweeper = new Ship_Minesweeper();
+        Ship_Minesweeper Minesweeper = new Ship_Minesweeper();
         Minesweeper.place('A', 1, true);
 
         var result = Minesweeper.attack(2, 'A');
@@ -55,7 +55,7 @@ public class Ship_MinesweeperTest {
     public void testCommandPlace() {
         Ship_Minesweeper Minesweeper = new Ship_Minesweeper();
         Minesweeper.place('A', 1, true);
-//        assertEquals(Minesweeper.getCaptainModule().getarmorPoints(), 1);
+       assertEquals(Minesweeper.getCaptainModule().getarmorPoints(), 1);
         assertEquals(Minesweeper.getCaptainModule().getColumn(), 'A');
         assertEquals(Minesweeper.getCaptainModule().getRow(), 1);
 

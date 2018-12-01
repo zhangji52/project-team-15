@@ -1,5 +1,5 @@
 var isSetup = true;
-var placedShips = -1;
+var placedShips = 0;
 var game;
 var shipType;
 var vertical;
@@ -42,6 +42,8 @@ function outputTextBox(input) {
             break;
         case 6:
             document.getElementById("textBox").value = "AAGHHHHH Ye sunk me precious booty!\n \n Sonar pulse now active\n \n 2 charges available!\n";
+        case 7:
+            document.getElementById("textBox").value = "You can now move your battleships!\n  Good luck Captain!";
     }
 
 }
@@ -135,7 +137,7 @@ function cellClick() {
             game = data;
             redrawGrid();
             placedShips++;
-            if (placedShips == 3) {
+            if (placedShips == 4) {
                 outputTextBox(4);
                 isSetup = false;
                 registerCellListener((e) => {});
@@ -256,10 +258,10 @@ function initGame() {
         shipType = "BATTLESHIP";
        registerCellListener(place(4));
     });
-    document.getElementById("place_submarine").addEventListener("click", function(e){
-        shipType = "SUBMARINE";
-        registerCellListener(place(4));
-    });
+    document.getElementById("place_submarine").addEventListener("click", function(e) {
+            shipType = "SUBMARINE";
+           registerCellListener(place(4));
+        });
     sendXhr("GET", "/game", {}, function(data) {
         game = data;
     });

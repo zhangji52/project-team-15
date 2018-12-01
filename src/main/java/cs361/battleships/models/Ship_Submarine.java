@@ -20,6 +20,18 @@ public class Ship_Submarine extends Ship_CaptainsQuarters {
         this.setSize(4);
     }
 
+    public Ship_Submarine(boolean Submerge) {
+        this.setOccupiedSquares(new ArrayList<>());
+        if(Submerge) {
+            this.setKind("SUBMARINE_S");
+        } else {
+            this.setKind("SUBMARINE");
+        }
+        this.setSize(4);
+        this.setIsSubmerged(Submerge);
+    }
+
+
     public void place(char col, int row, boolean isVertical) {
         List<Square> temp = getOccupiedSquares();
         for (int i=0; i < getSize(); i++) {
@@ -49,5 +61,17 @@ public class Ship_Submarine extends Ship_CaptainsQuarters {
         }
         this.setOccupiedSquares(temp);
     }
+
+    public boolean overlaps(Ship other) {
+        if(this.getIsSubmerged()){
+            return false;
+        }
+        Set<Square> thisSquares = Set.copyOf(getOccupiedSquares());
+        Set<Square> otherSquares = Set.copyOf(other.getOccupiedSquares());
+        Sets.SetView<Square> intersection = Sets.intersection(thisSquares, otherSquares);
+        return intersection.size() != 0;
+    }
+
+    boolean getIsSubmerged(){ return  isSubmerged; }
 
 }
