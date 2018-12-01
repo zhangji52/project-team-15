@@ -39,7 +39,7 @@ public class Ship {
 				size = 4;
 				break;
 			case "SUBMARINE":
-				size = 5;
+				size =4;
 				break;
 		}
 	}

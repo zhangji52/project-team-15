@@ -45,7 +45,9 @@ public class Board {
 				break;
 			case "BATTLESHIP": placedShipT = new Ship_Battleship();
 				break;
-			case "SUBMARINE": placedShipT = new Ship_Submarine();
+			case "SUBMARINE": placedShipT = new Ship_Submarine(false);
+				break;
+			case "SUBMARINE_S": placedShipT = new Ship_Submarine(true);
 				break;
 		}
 
@@ -82,6 +84,7 @@ public class Board {
 			var attackResult = new Result(s);
 			return attackResult;
 		}
+
 		var hitShip = shipsAtLocation.get(0);
 		var attackResult = hitShip.attack(s.getRow(), s.getColumn());
 		if (attackResult.getResult() == AtackStatus.SUNK) {

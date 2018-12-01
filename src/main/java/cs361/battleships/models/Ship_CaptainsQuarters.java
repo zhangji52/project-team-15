@@ -17,6 +17,7 @@ public class Ship_CaptainsQuarters extends Ship{
     @JsonProperty private SquareCommand CaptainModule;
     @JsonProperty private int CapLoc;
     @JsonProperty private int Armor;
+    @JsonProperty boolean isSubmerged = false;
 
     public void place(char col, int row, boolean isVertical) {
         List<Square> temp = getOccupiedSquares();
@@ -82,6 +83,15 @@ public class Ship_CaptainsQuarters extends Ship{
         //return getOccupiedSquares().stream().allMatch(s -> s.isHit());
     }
 
+    public boolean overlaps(Ship other) {
+        if(other.getKind() == "SUBMARINE_S" || this.getKind() == "SUBMARINE_S"){
+            return false;
+        }
+        Set<Square> thisSquares = Set.copyOf(getOccupiedSquares());
+        Set<Square> otherSquares = Set.copyOf(other.getOccupiedSquares());
+        Sets.SetView<Square> intersection = Sets.intersection(thisSquares, otherSquares);
+        return intersection.size() != 0;
+    }
 
     @JsonIgnore
     public SquareCommand getCaptainModule() {return CaptainModule; }
@@ -96,5 +106,10 @@ public class Ship_CaptainsQuarters extends Ship{
 
     @JsonIgnore
     protected void setCapLoc(int CaptainsLocation){ CapLoc = CaptainsLocation; }
+
+    protected void setIsSubmerged(boolean Submerged){ isSubmerged = Submerged; }
+
+    @JsonIgnore
+    boolean getIsSubmerged(){ return  isSubmerged; }
 
 }
